@@ -11,7 +11,7 @@ You can donwload Exquisite from the KDE Store (`System Settings > Window Managem
 
 ### Usage
 
-The default shortcut is `CTRL + ALT + D` but it can be configured from `System Settings > Shortcuts > KWin Scripts > Exquisite`. Click a window and click a layout box on the Exquisite window to place that window in that layout. You can do this for multiple windows and close the Exquisite window when you're done (by the close button on the top right or by pressing the shortcut keys).
+The default shortcut is `CTRL + ALT + D` but it can be configured from `System Settings > Shortcuts > KWin Scripts > Exquisite`. Click on a window and click a layout box on the Exquisite window to place that window in that layout. You can do this for multiple windows and close the Exquisite window when you're done (by the close button on the top right or by pressing the shortcut keys).
 
 
 https://user-images.githubusercontent.com/69015181/178298525-5c9ac287-b9d0-42da-9011-152f8e858d65.mp4
@@ -19,12 +19,12 @@ https://user-images.githubusercontent.com/69015181/178298525-5c9ac287-b9d0-42da-
 
 ### Configuration
 
-Exquisite can be configured from `System Settings > Window Management > KWin Scripts`. Curreent configuration options include:
+Exquisite can be configured from `System Settings > Window Management > KWin Scripts`. Current configuration options include:
 
 - Column count for the main window
 - Main window position (Top, Center or Bottom)
 - Main window header visibility
-- Whetever to maximize or not when the background button on a layout is clicked, the default behaviour might annoy some people
+- Whether to maximize or not when the background button on a layout is clicked, the default behaviour might annoy some people
 
 Keep in mind, Kwin needs to be restarted for the settings to apply.
 
