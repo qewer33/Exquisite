@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>373</width>
-    <height>136</height>
+    <width>382</width>
+    <height>178</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -102,6 +102,16 @@
     </widget>
    </item>
    <item>
+    <widget class="QCheckBox" name="kcfg_hideOnDesktopClick">
+     <property name="text">
+      <string>Hide window when clicked on desktop</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QCheckBox" name="kcfg_maximizeOnBackgroundClick">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
@@ -110,7 +120,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Maximize window when background button is pressed</string>
+      <string>Maximize window when background button is clicked</string>
      </property>
      <property name="checked">
       <bool>true</bool>

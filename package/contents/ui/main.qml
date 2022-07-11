@@ -16,12 +16,14 @@ PlasmaCore.Dialog {
     property int columns: 4
     property int position: 1
     property bool headerVisible: true
+    property bool hideOnDesktopClick: true
     property bool maximizeOnBackgroundClick: true
 
     function loadConfig(){
         columns = KWin.readConfig("columns", 4);
         position = KWin.readConfig("position", 1);
         headerVisible = KWin.readConfig("showHeader", true);
+        hideOnDesktopClick = KWin.readConfig("hideOnDesktopClick", true);
         maximizeOnBackgroundClick = KWin.readConfig("maximizeOnBackgroundClick", true);
     }
 
@@ -85,6 +87,14 @@ PlasmaCore.Dialog {
 
                     windows: layoutFile.item.windows
                 }
+            }
+        }
+
+        Connections {
+            target: workspace
+            function onClientActivated(client) {
+                if (hideOnDesktopClick && workspace.activeClient.desktopWindow)
+                    mainDialog.visible = false;
             }
         }
 
