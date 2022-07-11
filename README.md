@@ -7,11 +7,11 @@ Exquisite is a KWin script that brings Windows 11 like window tiling to KDE Plas
 
 ### Installation
 
-Clone the repo and run `./install.sh`. Will soon be uploaded to the KDE Store.
+You can donwload Exquisite from the KDE Store (`System Settings > Window Management > KWin Scripts > Get New KWin Scripts...`). For development, you can clone the repo and run `./install.sh`. KWin needs to be restarted on every install (either log out and back in or run `kwin_x11 --replace`, use `kwin_wayland` if you're on a Wayland session).
 
 ### Usage
 
-The default shortcut is `CTRL + ALT + D` but it can be configured from `System Settings > Shortcuts > KWin > Exquisite`. Click a window and click a layout box on the Exquisite window to place that window in that layout. You can do this for multiple windows and close the Exquisite window when you're done (by the close button on the top right or by pressing the shortcut keys).
+The default shortcut is `CTRL + ALT + D` but it can be configured from `System Settings > Shortcuts > KWin Scripts > Exquisite`. Click a window and click a layout box on the Exquisite window to place that window in that layout. You can do this for multiple windows and close the Exquisite window when you're done (by the close button on the top right or by pressing the shortcut keys).
 
 
 https://user-images.githubusercontent.com/69015181/178298525-5c9ac287-b9d0-42da-9011-152f8e858d65.mp4
@@ -26,7 +26,7 @@ Exquisite can be configured from `System Settings > Window Management > KWin Scr
 - Main window header visibility
 - Whetever to maximize or not when the background button on a layout is clicked, the default behaviour might annoy some people
 
-Keep in mind, Kwin needs to be restarted for the settings to apply (either log out and back in or run `kwin_x11 --replace &`, use `kwin_wayland` if you're on a Wayland session).
+Keep in mind, Kwin needs to be restarted for the settings to apply.
 
 ### Modifying and Creating Layouts
 
@@ -53,6 +53,7 @@ Item {
     ]
 }
 ```
+
 The import statement and Item declaration are boilerplate, what we really understand are the two properties: `name` and `windows`. `name` is pretty self explanatory, it's the name of the layout. The names aren't currently used right now but they might be in the future, better to write something explanatory rather than not.
 
 The `windows` parameter is an array of JS objects. Each object represents a window and has 4 entries: `row`, `rowSpan`, `column` and `columnSpan`. These entries describe how the window is laid out in the layout, let's take a look at each one in detail:
@@ -62,7 +63,7 @@ The `windows` parameter is an array of JS objects. Each object represents a wind
 - `column`: The column that the top left corner of the window will be placed at. Columns start from the upper side of the grid so you can think of this as like the `x` position of the window.
 - `columnSpan`: The amount of grid cells that the window is going to span inside a column. This includes the origin cell which is `column`. You can think of this as like the `height` of the window.
 
-The grid that the layout windows are placed in is 12x12 (choose 12 since it's a relatively small number and can be divided by 2, 3 and 4) so the maximum any of these parameters can be is 12 and the minimum is 0.
+The grid that the layout windows are placed in is 12x12 (choose 12 since it's a relatively small number and can be divided by 2, 3 and 4). For `row` and `column`, the minimum value is 0 and the maximum 11. For `rowSpan` and `columnSpan`, the minimum is 1 and the maximum is 12.
 
 Here is an image for better explanation:
 
