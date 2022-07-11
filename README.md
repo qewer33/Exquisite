@@ -7,11 +7,11 @@ Exquisite is a KWin script that brings Windows 11 like window tiling to KDE Plas
 
 ### Installation
 
-You can donwload Exquisite from the KDE Store (`System Settings > Window Management > KWin Scripts > Get New KWin Scripts...`). For development, you can clone the repo and run `./install.sh`. KWin needs to be restarted on every install (either log out and back in or run `kwin_x11 --replace`, use `kwin_wayland` if you're on a Wayland session).
+You can donwload Exquisite from the KDE Store (`System Settings > Window Management > KWin Scripts > Get New Scripts...`). For development, you can clone the repo and run `./install.sh`. KWin needs to be restarted on every install (either log out and back in or run `kwin_x11 --replace`, use `kwin_wayland` if you're on a Wayland session).
 
 ### Usage
 
-The default shortcut is `CTRL + ALT + D` but it can be configured from `System Settings > Shortcuts > KWin Scripts > Exquisite`. Click on a window and click a layout box on the Exquisite window to place that window in that layout. You can do this for multiple windows and close the Exquisite window when you're done (by the close button on the top right or by pressing the shortcut keys).
+The default shortcut is `Ctrl + Alt + D` but it can be configured from `System Settings > Shortcuts > KWin > Exquisite`. Click on a window and click a layout box on the Exquisite window to place that window in that layout. You can do this for multiple windows and close the Exquisite window when you're done (by the close button on the top right or by pressing the shortcut keys).
 
 
 https://user-images.githubusercontent.com/69015181/178298525-5c9ac287-b9d0-42da-9011-152f8e858d65.mp4
