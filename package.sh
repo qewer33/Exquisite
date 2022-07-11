@@ -21,7 +21,8 @@ get_project_name() {
 
 PACKAGE_NAME=$(kreadconfig5 --file="$PWD/package/metadata.desktop" --group="Desktop Entry" --key="X-KDE-PluginInfo-Name")
 
-tar -cvf "${PACKAGE_NAME}.kwinscript" -C "package/" .
+# tar -cvf "${PACKAGE_NAME}.kwinscript" -C "package/" .
+zip -r ${PACKAGE_NAME}.kwinscript package
 
 prompt "Do you want to commit and push the changes to the git repository?" && \
 git add . && \
