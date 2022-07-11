@@ -13,6 +13,10 @@ Clone the repo and run `./install.sh`. Will soon be uploaded to the KDE Store.
 
 The default shortcut is `CTRL + ALT + D` but it can be configured from `System Settings > Shortcuts > KWin > Exquisite`. Click a window and click a layout box on the Exquisite window to place that window in that layout. You can do this for multiple windows and close the Exquisite window when you're done (by the close button on the top right or by pressing the shortcut keys).
 
+
+https://user-images.githubusercontent.com/69015181/178298525-5c9ac287-b9d0-42da-9011-152f8e858d65.mp4
+
+
 ### Configuration
 
 Exquisite can be configured from `System Settings > Window Management > KWin Scripts`. Curreent configuration options include:
