@@ -26,6 +26,9 @@
             <default>true</default>
         </entry>
 
+        <entry name="keepOpen" type="Bool">
+            <default>true</default>
+        </entry>
+
     </group>
 </kcfg>
-

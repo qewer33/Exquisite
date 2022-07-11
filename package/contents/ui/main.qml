@@ -18,6 +18,7 @@ PlasmaCore.Dialog {
     property bool headerVisible: true
     property bool hideOnDesktopClick: true
     property bool maximizeOnBackgroundClick: true
+    property bool keepOpen: true
 
     function loadConfig(){
         columns = KWin.readConfig("columns", 4);
@@ -25,6 +26,7 @@ PlasmaCore.Dialog {
         headerVisible = KWin.readConfig("showHeader", true);
         hideOnDesktopClick = KWin.readConfig("hideOnDesktopClick", true);
         maximizeOnBackgroundClick = KWin.readConfig("maximizeOnBackgroundClick", true);
+        keepOpen = KWin.readConfig("keepOpen", true);
     }
 
     function show() {

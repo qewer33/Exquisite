@@ -127,6 +127,16 @@
      </property>
     </widget>
    </item>
+   <item>
+    <widget class="QCheckBox" name="kcfg_keepOpen">
+     <property name="text">
+      <string>Keep open after tiling a window</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <resources/>
