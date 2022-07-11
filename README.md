@@ -26,7 +26,7 @@ Exquisite can be configured from `System Settings > Window Management > KWin Scr
 - Main window header visibility
 - Whether to maximize the window or not when the background button on a layout is clicked, the default behaviour might annoy some people
 
-Keep in mind, Kwin needs to be restarted for the settings to apply.
+Keep in mind, KWin needs to be restarted for the settings to apply.
 
 ### Modifying and Creating Layouts
 
