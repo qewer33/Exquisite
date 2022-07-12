@@ -22,11 +22,11 @@
             <default>true</default>
         </entry>
 
-        <entry name="maximizeOnBackgroundClick" type="Bool">
-            <default>true</default>
+        <entry name="hideOnFirstTile" type="Bool">
+            <default>false</default>
         </entry>
 
-        <entry name="keepOpen" type="Bool">
+        <entry name="maximizeOnBackgroundClick" type="Bool">
             <default>true</default>
         </entry>
 

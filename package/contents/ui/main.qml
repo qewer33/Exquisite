@@ -17,16 +17,16 @@ PlasmaCore.Dialog {
     property int position: 1
     property bool headerVisible: true
     property bool hideOnDesktopClick: true
+    property bool hideOnFirstTile: false
     property bool maximizeOnBackgroundClick: true
-    property bool keepOpen: true
 
     function loadConfig(){
         columns = KWin.readConfig("columns", 4);
         position = KWin.readConfig("position", 1);
         headerVisible = KWin.readConfig("showHeader", true);
         hideOnDesktopClick = KWin.readConfig("hideOnDesktopClick", true);
+        hideOnFirstTile = KWin.readConfig("hideOnFirstTile", false);
         maximizeOnBackgroundClick = KWin.readConfig("maximizeOnBackgroundClick", true);
-        keepOpen = KWin.readConfig("keepOpen", true);
     }
 
     function show() {
