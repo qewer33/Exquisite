@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>382</width>
-    <height>196</height>
+    <width>458</width>
+    <height>217</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -118,6 +118,13 @@
      </property>
      <property name="checked">
       <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="kcfg_hideOnLayoutTiled">
+     <property name="text">
+      <string>Hide after a layout is tiled (all windows in a layout has been clicked)</string>
      </property>
     </widget>
    </item>

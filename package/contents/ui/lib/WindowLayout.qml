@@ -15,6 +15,7 @@ PlasmaComponents.Button {
 
     property var windows
     property bool maximizeOnBackgroundClick: true
+    property var clickedWindows: []
 
     onClicked: {
         if (root.maximizeOnBackgroundClick) {
@@ -56,7 +57,11 @@ PlasmaComponents.Button {
                     focusedWindow.setMaximize(false, false);
                     focusedWindow.geometry = Qt.rect(screen.x + newX, screen.y + newY, newWidth, newHeight);
 
-                    if (hideOnFirstTile) {
+                    if (!clickedWindows.includes(windows[index])) clickedWindows.push(windows[index]);
+
+                    if (hideOnFirstTile) mainDialog.visible = false;
+                    if (hideOnLayoutTiled && clickedWindows.length === windows.length) {
+                        clickedWindows = [];
                         mainDialog.visible = false;
                     }
                 }

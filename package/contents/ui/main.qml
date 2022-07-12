@@ -18,6 +18,7 @@ PlasmaCore.Dialog {
     property bool headerVisible: true
     property bool hideOnDesktopClick: true
     property bool hideOnFirstTile: false
+    property bool hideOnLayoutTiled: false
     property bool maximizeOnBackgroundClick: true
 
     function loadConfig(){
@@ -26,6 +27,7 @@ PlasmaCore.Dialog {
         headerVisible = KWin.readConfig("showHeader", true);
         hideOnDesktopClick = KWin.readConfig("hideOnDesktopClick", true);
         hideOnFirstTile = KWin.readConfig("hideOnFirstTile", false);
+        hideOnLayoutTiled = KWin.readConfig("hideOnLayoutTiled", false);
         maximizeOnBackgroundClick = KWin.readConfig("maximizeOnBackgroundClick", true);
     }
 
