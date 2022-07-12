@@ -10,8 +10,8 @@
             <default>5</default>
         </entry>
 
-        <entry name="position" type="string">
-            <default>Center</default>
+        <entry name="position" type="Int">
+            <default>1</default>
         </entry>
 
         <entry name="showHeader" type="Bool">
