@@ -55,6 +55,10 @@ PlasmaComponents.Button {
 
                     focusedWindow.setMaximize(false, false);
                     focusedWindow.geometry = Qt.rect(screen.x + newX, screen.y + newY, newWidth, newHeight);
+
+                    if (hideOnFirstTile) {
+                        mainDialog.visible = false;
+                    }
                 }
             }
         }
