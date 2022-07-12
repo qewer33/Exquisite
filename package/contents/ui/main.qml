@@ -13,7 +13,7 @@ PlasmaCore.Dialog {
     flags: Qt.X11BypassWindowManagerHint | Qt.FramelessWindowHint
     visible: false
 
-    property int columns: 4
+    property int columns: 5
     property int position: 1
     property bool headerVisible: true
     property bool hideOnDesktopClick: true
@@ -22,7 +22,7 @@ PlasmaCore.Dialog {
     property bool maximizeOnBackgroundClick: true
 
     function loadConfig(){
-        columns = KWin.readConfig("columns", 4);
+        columns = KWin.readConfig("columns", 5);
         position = KWin.readConfig("position", 1);
         headerVisible = KWin.readConfig("showHeader", true);
         hideOnDesktopClick = KWin.readConfig("hideOnDesktopClick", true);

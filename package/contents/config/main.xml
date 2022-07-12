@@ -7,7 +7,7 @@
     <group name="">
 
         <entry name="columns" type="Int">
-            <default>4</default>
+            <default>5</default>
         </entry>
 
         <entry name="position" type="string">
