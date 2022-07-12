@@ -1,7 +1,7 @@
 import QtQuick 2.6
 
 Item {
-    property string name: "One Left Two Right"
+    property string name: "Two Left One Right"
     property var windows: [
         {
             row: 0,
