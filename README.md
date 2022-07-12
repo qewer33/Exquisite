@@ -32,7 +32,7 @@ Keep in mind, KWin needs to be restarted for the settings to apply.
 
 ### Modifying and Creating Layouts
 
-Exquisite layouts are stored in `~/.local/kwin/scripts/exquisite/layouts/`. You can freely change them or add new ones. They're named by numbers so if you're going to add a new one, look at the last ones number and name your file one up that number. Let's take a look at an existing one (`0.qml`) to understand how they are structured:
+Exquisite layouts are stored in `~/.local/kwin/scripts/exquisite/layouts/`. You can freely change them, remove the ones you don't need or add new ones. They're named by numbers so if you're going to add a new one, look at the last ones number and name your file one up that number. Let's take a look at an existing one (`0.qml`) to understand how they are structured:
 
 ```qml
 import QtQuick 2.6
