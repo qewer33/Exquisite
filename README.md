@@ -24,6 +24,8 @@ Exquisite can be configured from `System Settings > Window Management > KWin Scr
 - Column count for the main window
 - Main window position (Top, Center or Bottom)
 - Main window header visibility
+- Whether to hide when a window is tiled
+- Whether to hide when a layout is tiled (all windows in the layout has been clicked)
 - Whether to maximize the window or not when the background button on a layout is clicked, the default behaviour might annoy some people
 
 Keep in mind, KWin needs to be restarted for the settings to apply.
