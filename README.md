@@ -7,7 +7,7 @@ Exquisite is a KWin script that brings Windows 11 like window tiling to KDE Plas
 
 ### Installation
 
-You can donwload Exquisite from the KDE Store (`System Settings > Window Management > KWin Scripts > Get New Scripts...`). For development, you can clone the repo and run `./install.sh`. KWin needs to be restarted on every install (either log out and back in or run `kwin_x11 --replace`, use `kwin_wayland` if you're on a Wayland session).
+You can download Exquisite from the KDE Store (`System Settings > Window Management > KWin Scripts > Get New Scripts...`). For development, you can clone the repo and run `./install.sh`. KWin needs to be restarted on every install (either log out and log back in or run `kwin_x11 --replace`, use `kwin_wayland` if you're on a Wayland session).
 
 ### Usage
 
@@ -32,7 +32,7 @@ Keep in mind, KWin needs to be restarted for the settings to apply.
 
 ### Modifying and Creating Layouts
 
-Exquisite layouts are stored in `~/.local/share/kwin/scripts/exquisite/contents/layouts/`. You can freely change them, remove the ones you don't need or add new ones. They're named by numbers so if you're going to add a new one, look at the last ones number and name your file one up that number. Let's take a look at an existing one (`0.qml`) to understand how they are structured:
+Exquisite layouts are stored in `~/.local/share/kwin/scripts/exquisite/contents/layouts/`. You can freely change them, remove the ones you don't need or add new ones. They're named by numbers so if you're going to add a new one, look at the last one's number and name your file one up that number. Let's take a look at an existing one (`0.qml`) to understand how they are structured:
 
 ```qml
 import QtQuick 2.6
