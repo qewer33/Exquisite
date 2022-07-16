@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>458</width>
-    <height>217</height>
+    <width>454</width>
+    <height>244</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -103,6 +103,12 @@
    </item>
    <item>
     <widget class="QCheckBox" name="kcfg_hideOnDesktopClick">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="text">
       <string>Hide when clicking on desktop</string>
      </property>
@@ -113,6 +119,12 @@
    </item>
    <item>
     <widget class="QCheckBox" name="kcfg_hideOnFirstTile">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="text">
       <string>Hide after tiling a window</string>
      </property>
@@ -123,8 +135,30 @@
    </item>
    <item>
     <widget class="QCheckBox" name="kcfg_hideOnLayoutTiled">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="text">
       <string>Hide after a layout is tiled (all windows in a layout has been clicked)</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="kcfg_rememberWindowGeometries">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>Remember and restore old geometries of tiled windows</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
      </property>
     </widget>
    </item>

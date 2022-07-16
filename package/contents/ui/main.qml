@@ -19,7 +19,10 @@ PlasmaCore.Dialog {
     property bool hideOnDesktopClick: true
     property bool hideOnFirstTile: false
     property bool hideOnLayoutTiled: false
+    property bool rememberWindowGeometries: true
     property bool maximizeOnBackgroundClick: true
+
+    property var oldWindowGemoetries: new Map()
 
     function loadConfig(){
         columns = KWin.readConfig("columns", 5);
@@ -28,6 +31,7 @@ PlasmaCore.Dialog {
         hideOnDesktopClick = KWin.readConfig("hideOnDesktopClick", true);
         hideOnFirstTile = KWin.readConfig("hideOnFirstTile", false);
         hideOnLayoutTiled = KWin.readConfig("hideOnLayoutTiled", false);
+        rememberWindowGeometries = KWin.readConfig("rememberWindowGeometries", true);
         maximizeOnBackgroundClick = KWin.readConfig("maximizeOnBackgroundClick", true);
     }
 
@@ -106,6 +110,21 @@ PlasmaCore.Dialog {
             target: options
             function onConfigChanged() {
                 mainDialog.loadConfig();
+            }
+        }
+
+        Connections {
+            target: workspace.activeClient
+            function onMoveResizedChanged() {
+                if (rememberWindowGeometries) {
+                    let focusedWindow = workspace.activeClient;
+
+                    if (oldWindowGemoetries.has(focusedWindow)) {
+                        let newSize = oldWindowGemoetries.get(focusedWindow);
+                        focusedWindow.geometry = Qt.rect(focusedWindow.geometry.x, focusedWindow.geometry.y, newSize[0], newSize[1]);
+                        oldWindowGemoetries.delete(focusedWindow);
+                    }
+                }
             }
         }
     }

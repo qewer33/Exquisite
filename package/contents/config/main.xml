@@ -30,6 +30,10 @@
             <default>false</default>
         </entry>
 
+        <entry name="rememberWindowGeometries" type="Bool">
+            <default>true</default>
+        </entry>
+
         <entry name="maximizeOnBackgroundClick" type="Bool">
             <default>true</default>
         </entry>

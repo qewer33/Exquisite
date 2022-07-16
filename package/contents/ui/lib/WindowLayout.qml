@@ -21,6 +21,10 @@ PlasmaComponents.Button {
         if (root.maximizeOnBackgroundClick) {
             workspace.activeClient.setMaximize(true, true);
         }
+        for (let i = 0; i < workspace.clientList().length; i++) {
+            let client = workspace.clientList()[i];
+            console.log(client.geometry);
+        }
     }
 
     SpanGridLayout {
@@ -41,6 +45,8 @@ PlasmaComponents.Button {
                 onClicked: {
                     let focusedWindow = workspace.activeClient;
                     if (!focusedWindow.normalWindow) return;
+
+                    if (rememberWindowGeometries) oldWindowGemoetries.set(focusedWindow, [focusedWindow.geometry.width, focusedWindow.geometry.height]);
 
                     let screen = workspace.clientArea(KWin.MaximizeArea, workspace.activeScreen, focusedWindow.desktop);
 
