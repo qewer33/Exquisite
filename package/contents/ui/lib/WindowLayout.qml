@@ -40,8 +40,6 @@ PlasmaComponents.Button {
 
                 onClicked: {
                     let focusedWindow = workspace.activeClient;
-                    if (focusedWindow.desktopWindow) return;
-
                     if (!focusedWindow.normalWindow) return;
 
                     let screen = workspace.clientArea(KWin.MaximizeArea, workspace.activeScreen, focusedWindow.desktop);
