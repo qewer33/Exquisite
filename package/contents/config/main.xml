@@ -34,7 +34,7 @@
             <default>true</default>
         </entry>
 
-        <entry name="maximizeOnBackgroundClick" type="Bool">
+        <entry name="tileAvailableWindowsOnBackgroundClick" type="Bool">
             <default>true</default>
         </entry>
 

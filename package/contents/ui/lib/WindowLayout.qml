@@ -14,7 +14,6 @@ PlasmaComponents.Button {
     implicitHeight: 90*1.2 * PlasmaCore.Units.devicePixelRatio
 
     property var windows
-    property bool maximizeOnBackgroundClick: true
     property var clickedWindows: []
 
     function tileWindow(window, row, rowSpan, column, columnSpan) {
@@ -36,12 +35,19 @@ PlasmaComponents.Button {
     }
 
     onClicked: {
-        if (root.maximizeOnBackgroundClick) {
-            workspace.activeClient.setMaximize(true, true);
-        }
-        for (let i = 0; i < workspace.clientList().length; i++) {
-            let client = workspace.clientList()[i];
-            console.log(client.geometry);
+        if (tileAvailableWindowsOnBackgroundClick) {
+            let clientList = [];
+            for (let i = 0; i < workspace.clientList().length; i++) {
+                if (workspace.clientList()[i].normalWindow && workspace.currentDesktop === workspace.clientList()[i].desktop)
+                    clientList.push(workspace.clientList()[i]);
+            }
+
+            for (let i = 0; i < clientList.length; i++) {
+                console.log(`${i}:${windows.length}:${clientList.length}`);
+                if (i >= windows.length || i >= clientList.length) return;
+                let client = clientList[i];
+                tileWindow(client, windows[i].row, windows[i].rowSpan, windows[i].column, windows[i].columnSpan);
+            }
         }
     }
 

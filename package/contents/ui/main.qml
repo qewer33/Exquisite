@@ -20,7 +20,7 @@ PlasmaCore.Dialog {
     property bool hideOnFirstTile: false
     property bool hideOnLayoutTiled: false
     property bool rememberWindowGeometries: true
-    property bool maximizeOnBackgroundClick: true
+    property bool tileAvailableWindowsOnBackgroundClick: true
 
     property var oldWindowGemoetries: new Map()
 
@@ -32,7 +32,7 @@ PlasmaCore.Dialog {
         hideOnFirstTile = KWin.readConfig("hideOnFirstTile", false);
         hideOnLayoutTiled = KWin.readConfig("hideOnLayoutTiled", false);
         rememberWindowGeometries = KWin.readConfig("rememberWindowGeometries", true);
-        maximizeOnBackgroundClick = KWin.readConfig("maximizeOnBackgroundClick", true);
+        tileAvailableWindowsOnBackgroundClick = KWin.readConfig("tileAvailableWindowsOnBackgroundClick", true);
     }
 
     function show() {
@@ -86,8 +86,6 @@ PlasmaCore.Dialog {
                 }
 
                 WindowLayout {
-                    maximizeOnBackgroundClick: mainDialog.maximizeOnBackgroundClick
-
                     Loader {
                         id: layoutFile
                         source: fileUrl
