@@ -38,8 +38,9 @@ PlasmaComponents.Button {
         if (tileAvailableWindowsOnBackgroundClick) {
             let clientList = [];
             for (let i = 0; i < workspace.clientList().length; i++) {
-                if (workspace.clientList()[i].normalWindow && workspace.currentDesktop === workspace.clientList()[i].desktop)
-                    clientList.push(workspace.clientList()[i]);
+                let client = workspace.clientList()[i];
+                if (client.normalWindow && workspace.currentDesktop === client.desktop && !client.minimized)
+                    clientList.push(client);
             }
 
             for (let i = 0; i < clientList.length; i++) {
