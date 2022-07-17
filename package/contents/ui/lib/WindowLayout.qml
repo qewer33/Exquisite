@@ -17,6 +17,24 @@ PlasmaComponents.Button {
     property bool maximizeOnBackgroundClick: true
     property var clickedWindows: []
 
+    function tileWindow(window, row, rowSpan, column, columnSpan) {
+        if (!window.normalWindow) return;
+        if (rememberWindowGeometries && !oldWindowGemoetries.has(window)) oldWindowGemoetries.set(window, [window.geometry.width, window.geometry.height]);
+
+        let screen = workspace.clientArea(KWin.MaximizeArea, workspace.activeScreen, window.desktop);
+
+        let xMult = screen.width / 12.0;
+        let yMult = screen.height / 12.0;
+
+        let newX = column * xMult;
+        let newY = row * yMult;
+        let newWidth = rowSpan * xMult;
+        let newHeight = columnSpan * yMult;
+
+        window.setMaximize(false, false);
+        window.geometry = Qt.rect(screen.x + newX, screen.y + newY, newWidth, newHeight);
+    }
+
     onClicked: {
         if (root.maximizeOnBackgroundClick) {
             workspace.activeClient.setMaximize(true, true);
@@ -43,23 +61,7 @@ PlasmaComponents.Button {
                 Layout.columnSpan: windows[index].columnSpan
 
                 onClicked: {
-                    let focusedWindow = workspace.activeClient;
-                    if (!focusedWindow.normalWindow) return;
-
-                    if (rememberWindowGeometries) oldWindowGemoetries.set(focusedWindow, [focusedWindow.geometry.width, focusedWindow.geometry.height]);
-
-                    let screen = workspace.clientArea(KWin.MaximizeArea, workspace.activeScreen, focusedWindow.desktop);
-
-                    let xMult = screen.width / 12.0;
-                    let yMult = screen.height / 12.0;
-
-                    let newX = windows[index].column * xMult;
-                    let newY = windows[index].row * yMult;
-                    let newWidth = windows[index].rowSpan * xMult;
-                    let newHeight = windows[index].columnSpan * yMult;
-
-                    focusedWindow.setMaximize(false, false);
-                    focusedWindow.geometry = Qt.rect(screen.x + newX, screen.y + newY, newWidth, newHeight);
+                    tileWindow(workspace.activeClient, windows[index].row, windows[index].rowSpan, windows[index].column, windows[index].columnSpan);
 
                     if (!clickedWindows.includes(windows[index])) clickedWindows.push(windows[index]);
 
