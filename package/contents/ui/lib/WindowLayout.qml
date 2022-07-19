@@ -49,6 +49,8 @@ PlasmaComponents.Button {
                 let client = clientList[i];
                 tileWindow(client, windows[i].row, windows[i].rowSpan, windows[i].column, windows[i].columnSpan);
             }
+
+            if (hideOnFirstTile || hideOnLayoutTiled) mainDialog.visible = false;
         }
     }
 
