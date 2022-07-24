@@ -34,7 +34,7 @@ Keep in mind, KWin needs to be restarted for the settings to apply.
 
 ### Torubleshooting
 
-##### Doesn't Work on Older Plasma/Distribution Versions
+#### Doesn't Work on Older Plasma/Distribution Versions
 
 If you don't have an up to date system (e.g older Debian or Ubuntu versions), Exquisite [may not work out of the box](https://github.com/qewer33/Exquisite/issues/10). In order to resolve this, you need to make the following changes:
 
