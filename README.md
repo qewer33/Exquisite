@@ -5,6 +5,8 @@
 
 Exquisite is a KWin script that brings Windows 11 like window tiling to KDE Plasma.
 
+[KDE Store link](https://store.kde.org/p/1852610/)
+
 ### Installation
 
 You can download Exquisite from the KDE Store (`System Settings > Window Management > KWin Scripts > Get New Scripts...`). For development, you can clone the repo and run `./install.sh`. KWin needs to be restarted on every install (either log out and log back in or run `kwin_x11 --replace`, use `kwin_wayland` if you're on a Wayland session).
@@ -29,6 +31,34 @@ Exquisite can be configured from `System Settings > Window Management > KWin Scr
 - Whether to maximize the window or not when the background button on a layout is clicked, the default behaviour might annoy some people
 
 Keep in mind, KWin needs to be restarted for the settings to apply.
+
+### Torubleshooting
+
+##### Doesn't Work on Older Plasma/Distribution Versions
+
+If you don't have an up to date system (e.g older Debian or Ubuntu versions), Exquisite [may not work out of the box](https://github.com/qewer33/Exquisite/issues/10). In order to resolve this, you need to make the following changes:
+
+- In the file `~/.local/share/kwin/scripts/exquisite/contents/ui/main.qml`, find the following line (depends on the current version of Exquisite but should be around line 90):
+```qml
+source: fileUrl
+```
+and change it to:
+```qml
+source: fileURL
+```
+
+- In the file `~/.local/share/kwin/scripts/exquisite/contents/ui/lib/WindowLayout.qml`, find the dollowing lines (they should be around line 13):
+```qml
+implicitWidth: 160*1.2 * PlasmaCore.Units.devicePixelRatio
+implicitHeight: 90*1.2 * PlasmaCore.Units.devicePixelRatio
+```
+and change them to:
+```qml
+implicitWidth: 120
+implicitHeight: 70
+```
+
+If you have further troubles, [please open an issue](https://github.com/qewer33/Exquisite/issues/new).
 
 ### Modifying and Creating Layouts
 

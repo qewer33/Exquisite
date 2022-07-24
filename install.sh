@@ -5,7 +5,7 @@ get_project_id() {
     IFS='='
     read -ra array <<< "${line}"
     projectid=${array[1]}
-    echo ${projectid}
+    echo "${projectid}"
 }
 
 PROJECT_ID=$(get_project_id)
