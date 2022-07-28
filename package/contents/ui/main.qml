@@ -53,6 +53,18 @@ PlasmaCore.Dialog {
     ColumnLayout {
         id: mainColumnLayout
 
+        PlasmaCore.DataSource {
+            id: command
+            engine: "executable"
+            connectedSources: []
+            onNewData: {
+                disconnectSource(sourceName)
+            }
+            function exec() {
+                connectSource("nohup kwin_x11 --replace && kwin_wayland --replace &")
+            }
+        }
+
         RowLayout {
             id: headerRowLayout
             visible: mainDialog.headerVisible
@@ -60,6 +72,21 @@ PlasmaCore.Dialog {
             PlasmaComponents.Label {
                 text: " Exquisite"
                 Layout.fillWidth: true
+            }
+
+            PlasmaComponents.Button {
+                text: "Restart KWin"
+                icon.name: "view-refresh-symbolic"
+                onClicked: {
+                    command.exec()
+                }
+            }
+
+            PlasmaComponents.Button {
+                icon.name: "question"
+                onClicked: {
+                    Qt.openUrlExternally("https://github.com/qewer33/Exquisite#exquisite")
+                }
             }
 
             PlasmaComponents.Button {
