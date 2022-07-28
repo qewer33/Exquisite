@@ -32,7 +32,7 @@ Exquisite can be configured from `System Settings > Window Management > KWin Scr
 
 Keep in mind, KWin needs to be restarted for the settings to apply.
 
-### Torubleshooting
+### Troubleshooting
 
 #### Doesn't Work on Older Plasma/Distribution Versions
 
@@ -86,7 +86,7 @@ Item {
 }
 ```
 
-The import statement and Item declaration are boilerplate, what we really need to understand are the two properties: `name` and `windows`. `name` is pretty self explanatory, it's the name of the layout. The names aren't currently used but they might be in the future, better to write something explanatory rather than not.
+The import statement and Item declaration are boilerplate, what we really need to understand are the two properties: `name` and `windows`. `name` is pretty self-explanatory, it's the name of the layout. The names aren't currently used but they might be in the future, better to write something explanatory rather than not.
 
 The `windows` parameter is an array of JS objects. Each object represents a window and has 4 entries: `row`, `rowSpan`, `column` and `columnSpan`. These entries describe how the window is laid out in the layout, let's take a look at each one in detail:
 
