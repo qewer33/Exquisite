@@ -16,6 +16,8 @@ PlasmaCore.Dialog {
     property int columns: 5
     property int position: 1
     property bool headerVisible: true
+    property bool restartButtonVisible: true
+    property bool helpButtonVisible: true
     property bool hideOnDesktopClick: true
     property bool hideOnFirstTile: false
     property bool hideOnLayoutTiled: false
@@ -28,6 +30,8 @@ PlasmaCore.Dialog {
         columns = KWin.readConfig("columns", 5);
         position = KWin.readConfig("position", 1);
         headerVisible = KWin.readConfig("showHeader", true);
+        restartButtonVisible = KWin.readConfig("showRestartButton", true);
+        helpButtonVisible = KWin.readConfig("showHelpButton", true);
         hideOnDesktopClick = KWin.readConfig("hideOnDesktopClick", true);
         hideOnFirstTile = KWin.readConfig("hideOnFirstTile", false);
         hideOnLayoutTiled = KWin.readConfig("hideOnLayoutTiled", false);
@@ -77,6 +81,7 @@ PlasmaCore.Dialog {
             PlasmaComponents.Button {
                 text: "Restart KWin"
                 icon.name: "view-refresh-symbolic"
+                visible: restartButtonVisible
                 onClicked: {
                     command.exec()
                 }
@@ -84,6 +89,7 @@ PlasmaCore.Dialog {
 
             PlasmaComponents.Button {
                 icon.name: "question"
+                visible: helpButtonVisible
                 onClicked: {
                     Qt.openUrlExternally("https://github.com/qewer33/Exquisite#exquisite")
                 }

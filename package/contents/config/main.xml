@@ -18,6 +18,14 @@
             <default>true</default>
         </entry>
 
+        <entry name="showRestartButton" type="Bool">
+            <default>true</default>
+        </entry>
+
+        <entry name="showHelpButton" type="Bool">
+            <default>true</default>
+        </entry>
+
         <entry name="hideOnDesktopClick" type="Bool">
             <default>true</default>
         </entry>
