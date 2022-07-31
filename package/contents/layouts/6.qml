@@ -2,6 +2,7 @@ import QtQuick 2.5
 
 Item {
     property string name: "Four Tiled"
+    property string shortcut: ""
     property var windows: [
         {
             row: 0,

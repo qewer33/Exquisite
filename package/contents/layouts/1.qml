@@ -2,6 +2,7 @@ import QtQuick 2.6
 
 Item {
     property string name: "Two Horizontal Split"
+    property string shortcut: ""
     property var windows: [
         {
             row: 0,

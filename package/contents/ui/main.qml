@@ -124,6 +124,7 @@ PlasmaCore.Dialog {
                         source: fileUrl
                     }
 
+                    layoutIndex: index
                     windows: layoutFile.item.windows
                 }
             }

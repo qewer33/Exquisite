@@ -2,6 +2,7 @@ import QtQuick 2.6
 
 Item {
     property string name: "Two Left One Right"
+    property string shortcut: ""
     property var windows: [
         {
             row: 0,

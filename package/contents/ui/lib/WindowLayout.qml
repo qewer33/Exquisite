@@ -13,6 +13,7 @@ PlasmaComponents.Button {
     implicitWidth: 160*1.2 * PlasmaCore.Units.devicePixelRatio
     implicitHeight: 90*1.2 * PlasmaCore.Units.devicePixelRatio
 
+    property var layoutIndex
     property var windows
     property var clickedWindows: []
 
@@ -78,6 +79,35 @@ PlasmaComponents.Button {
                     if (hideOnLayoutTiled && clickedWindows.length === windows.length) {
                         clickedWindows = [];
                         mainDialog.visible = false;
+                    }
+                }
+
+                PlasmaComponents.Label {
+                    anchors.fill: parent
+                    text: windows[index].shortcut ? windows[index].shortcut : ""
+                    minimumPixelSize: 5
+                    minimumPointSize: 2
+                    fontSizeMode: Text.HorizontalFit
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                }
+
+                Component.onCompleted: {
+                    if (windows[index].shortcut) {
+                        let id = "Exquisite Layout " + layoutIndex + " Window  " + index;
+                        let row = windows[index].row;
+                        let rowSpan = windows[index].rowSpan;
+                        let column = windows[index].column;
+                        let columnSpan = windows[index].columnSpan;
+
+                        KWin.registerShortcut(
+                            id,
+                            id,
+                            windows[index].shortcut,
+                            function() {
+                                tileWindow(workspace.activeClient, row, rowSpan, column, columnSpan);
+                            }
+                        );
                     }
                 }
             }

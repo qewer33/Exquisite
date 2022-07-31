@@ -2,6 +2,7 @@ import QtQuick 2.5
 
 Item {
     property string name: "1:3 Left Sidebar"
+    property string shortcut: ""
     property var windows: [
         {
             row: 0,
