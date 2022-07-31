@@ -1,17 +1,26 @@
-## Exquisite
+<div align="center"> 
+    
+# ✨ Exquisite 
+a KWin script that brings Windows 11 like window tiling to KDE Plasma
+    
+[KDE Store link](https://store.kde.org/p/1852610/)  (don't be shy to drop a review :D)
+
+![](https://img.shields.io/static/v1?style=for-the-badge&label=KWin&message=Script&color=blue&logo=kde)
+![](https://img.shields.io/badge/Wayland-Ready-blue?style=for-the-badge&logo=linux)
+![](https://img.shields.io/static/v1?style=for-the-badge&label=KDE%20Store&message=750%20Downloads&color=blue&logo=kde&logoColor=orange)
+![](https://img.shields.io/static/v1?style=for-the-badge&label=Qt&message=QML&color=green&logo=qt)
+    
+</div>
+<br>
 
 ![screenshot_0](https://github.com/qewer33/Exquisite/blob/main/assets/screenshot_0.png?raw=true)
 ![screenshot_1](https://github.com/qewer33/Exquisite/blob/main/assets/screenshot_1.png?raw=true)
 
-Exquisite is a KWin script that brings Windows 11 like window tiling to KDE Plasma.
-
-[KDE Store link](https://store.kde.org/p/1852610/)
-
-### Installation
+## Installation
 
 You can download Exquisite from the KDE Store (`System Settings > Window Management > KWin Scripts > Get New Scripts...`). For development, you can clone the repo and run `./install.sh`. KWin needs to be restarted on every install (either log out and log back in or run `kwin_x11 --replace`, use `kwin_wayland` if you're on a Wayland session).
 
-### Usage
+## Usage
 
 The default shortcut is `Ctrl + Alt + D` but it can be configured from `System Settings > Shortcuts > KWin > Exquisite`. Click on a window and click a layout box on the Exquisite window to place that window in that layout. You can do this for multiple windows and close the Exquisite window when you're done (by the close button on the top right or by pressing the shortcut keys).
 
@@ -19,7 +28,7 @@ The default shortcut is `Ctrl + Alt + D` but it can be configured from `System S
 https://user-images.githubusercontent.com/69015181/178298525-5c9ac287-b9d0-42da-9011-152f8e858d65.mp4
 
 
-### Configuration
+## Configuration
 
 Exquisite can be configured from `System Settings > Window Management > KWin Scripts`. Current configuration options include:
 
@@ -32,7 +41,7 @@ Exquisite can be configured from `System Settings > Window Management > KWin Scr
 
 Keep in mind, KWin needs to be restarted for the settings to apply.
 
-### Troubleshooting
+## Troubleshooting
 
 #### Doesn't Work on Older Plasma/Distribution Versions
 
@@ -60,7 +69,7 @@ implicitHeight: 70
 
 If you have further troubles, [please open an issue](https://github.com/qewer33/Exquisite/issues/new).
 
-### Modifying and Creating Layouts
+## Modifying and Creating Layouts
 
 Exquisite layouts are stored in `~/.local/share/kwin/scripts/exquisite/contents/layouts/`. You can freely change them, remove the ones you don't need or add new ones. They're named by numbers so if you're going to add a new one, look at the last one's number and name your file one up that number. Let's take a look at an existing one (`0.qml`) to understand how they are structured:
 
