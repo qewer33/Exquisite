@@ -62,10 +62,10 @@ PlasmaCore.Dialog {
             engine: "executable"
             connectedSources: []
             onNewData: {
-                disconnectSource(sourceName)
+                disconnectSource(sourceName);
             }
             function exec() {
-                connectSource("nohup kwin_x11 --replace && kwin_wayland --replace &")
+                connectSource(`bash ${Qt.resolvedUrl("./").replace(/^(file:\/{2})/,"")}restartKWin.sh`);
             }
         }
 
