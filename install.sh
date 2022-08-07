@@ -14,7 +14,7 @@ INSTALL_LOCATION="${HOME}/.local/share/kwin/scripts/"
 echo "Installing ${PROJECT_ID}"
 
 if [ ! -d "${INSTALL_LOCATION}" ]; then
-    mkdir "${INSTALL_LOCATION}${PROJECT_ID}"
+    mkdir -p "${INSTALL_LOCATION}${PROJECT_ID}"
 else
     echo "Skipping directory creation: directory exists"
 fi
