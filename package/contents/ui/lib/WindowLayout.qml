@@ -44,10 +44,10 @@ PlasmaComponents.Button {
             }
 
             for (let i = 0; i < clientList.length; i++) {
-                console.log(`${i}:${windows.length}:${clientList.length}`);
                 if (i >= windows.length || i >= clientList.length) return;
                 let client = clientList[i];
                 tileWindow(client, windows[i].row, windows[i].rowSpan, windows[i].column, windows[i].columnSpan);
+                workspace.activeClient = client;
             }
 
             if (hideOnFirstTile || hideOnLayoutTiled) mainDialog.visible = false;

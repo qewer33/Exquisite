@@ -209,7 +209,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Maximize window when background button is clicked</string>
+      <string>Automatically tile available windows when the background button of a layout is clicked</string>
      </property>
      <property name="checked">
       <bool>true</bool>
