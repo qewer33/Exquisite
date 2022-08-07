@@ -65,6 +65,7 @@ PlasmaCore.Dialog {
                 disconnectSource(sourceName);
             }
             function exec() {
+                mainDialog.visible = false;
                 connectSource(`bash ${Qt.resolvedUrl("./").replace(/^(file:\/{2})/,"")}restartKWin.sh`);
             }
         }
