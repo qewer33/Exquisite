@@ -1,4 +1,4 @@
-# 0.4 Release
+# (INDEV) 0.4 Release
 
 ### Features
 
@@ -14,3 +14,4 @@
 ### Bug Fixes
 
 - Normal window tiling should be more robust now
+- "Can't read property 'desktopWindow' of null" errors on KWin logs should be gone now (thanks to @emvaized on GitHub)
