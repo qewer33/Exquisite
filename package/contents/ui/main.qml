@@ -133,6 +133,7 @@ PlasmaCore.Dialog {
         Connections {
             target: workspace
             function onClientActivated(client) {
+                if (!client) return;
                 if (hideOnDesktopClick && workspace.activeClient.desktopWindow)
                     mainDialog.visible = false;
             }
