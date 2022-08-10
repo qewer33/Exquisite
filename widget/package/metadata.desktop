@@ -16,3 +16,4 @@ X-KDE-PluginInfo-EnabledByDefault=true
 
 X-Plasma-API=declarativeappletscript
 X-Plasma-MainScript=ui/main.qml
+X-KPackage-Dependencies=kns://kwinscripts.knsrc/api.kde-look.org/1852610
