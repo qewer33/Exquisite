@@ -2,6 +2,8 @@
 
 ### Features
 
+- New "Toggle Exquisite" widget for visually toggling the Exquisite window
+    - The widget is fairly simple and can be placed on both the desktop and panels. It's icon is configurable
 - Save and restore geometry of tiled windows
     - Tested and seems to be working quite well
 - Auto tile available windows when the background button of a layout is clicked
