@@ -19,6 +19,9 @@ else
     echo "Skipping directory creation: directory exists"
 fi
 
+cd widget
+./install.sh
+
 cp -R "package/." "${INSTALL_LOCATION}${PROJECT_ID}/" &&
 echo "Successfully installed ${PROJECT_ID} to ${INSTALL_LOCATION}" ||
 echo "Installation failed"

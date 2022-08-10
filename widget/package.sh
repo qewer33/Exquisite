@@ -22,8 +22,3 @@ get_project_name() {
 PACKAGE_NAME=$(get_project_name)
 
 tar -czvf "${PACKAGE_NAME}.tar.gz" -C "package/" .
-
-prompt "Do you want to commit and push the changes to the git repository?" && \
-git add . && \
-git commit -m "Update package" && \
-git push
