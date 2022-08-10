@@ -1,3 +1,3 @@
-# simple-plasmoid-template
+# Toggle Exquisite
 
-This is a simple template for making KDE Plasma plasmoids (widgets). Unlike KDevelop's plasmoid template, instead of using a build system like CMake, it has a couple of useful scripts for those tasks.
+A simple widget that toggles the visibility of the Exquisite window. Can be placed on the desktop or on a panel and displays a configurable icon.
