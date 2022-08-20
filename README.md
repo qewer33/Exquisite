@@ -4,7 +4,9 @@
 a KWin script that brings Windows 11 like window tiling to KDE Plasma
     
 [KDE Store link](https://store.kde.org/p/1852610/)
+
 [Widget KDE Store link](https://store.kde.org/p/1878384/)
+
 (don't be shy to drop a review :D)
 
 ![](https://img.shields.io/static/v1?style=for-the-badge&label=KWin&message=Script&color=blue&logo=kde)
