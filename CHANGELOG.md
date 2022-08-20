@@ -1,4 +1,4 @@
-# (INDEV) 0.4 Release
+# 0.4 Release
 
 ### Features
 
