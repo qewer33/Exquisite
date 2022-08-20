@@ -63,7 +63,7 @@ and change it to:
 source: fileURL
 ```
 
-- In the file `~/.local/share/kwin/scripts/exquisite/contents/ui/lib/WindowLayout.qml`, find the dollowing lines (they should be around line 13):
+- In the file `~/.local/share/kwin/scripts/exquisite/contents/ui/lib/WindowLayout.qml`, find the following lines (they should be around line 13):
 ```qml
 implicitWidth: 160*1.2 * PlasmaCore.Units.devicePixelRatio
 implicitHeight: 90*1.2 * PlasmaCore.Units.devicePixelRatio
