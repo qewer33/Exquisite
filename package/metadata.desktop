@@ -17,3 +17,4 @@ X-KDE-PluginInfo-EnabledByDefault=true
 X-Plasma-API=declarativescript
 X-Plasma-MainScript=ui/main.qml
 X-KDE-ConfigModule=kwin/effects/configs/kcm_kwin4_genericscripted
+X-KPackage-Dependencies=kns://plasmoids.knsrc/api.kde-look.org/1878384
