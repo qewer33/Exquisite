@@ -3,7 +3,9 @@
 # ✨ Exquisite 
 a KWin script that brings Windows 11 like window tiling to KDE Plasma
     
-[KDE Store link](https://store.kde.org/p/1852610/)  (don't be shy to drop a review :D)
+[KDE Store link](https://store.kde.org/p/1852610/)
+[Widget KDE Store link](https://store.kde.org/p/1878384/)
+(don't be shy to drop a review :D)
 
 ![](https://img.shields.io/static/v1?style=for-the-badge&label=KWin&message=Script&color=blue&logo=kde)
 ![](https://img.shields.io/badge/Wayland-Ready-blue?style=for-the-badge&logo=linux)
@@ -26,6 +28,11 @@ The default shortcut is `Ctrl + Alt + D` but it can be configured from `System S
 
 
 https://user-images.githubusercontent.com/69015181/178298525-5c9ac287-b9d0-42da-9011-152f8e858d65.mp4
+
+
+There is also a widget companion available if you want to toggle Exquisite visually. You can get it from the KDE Store via `Right Click on Desktop > Add Widget > Get New Widgets`. The widget source code lives under the `widget` directory.
+
+![screenshot_widget](https://github.com/qewer33/Exquisite/blob/main/assets/screenshot_widget.png?raw=true)
 
 
 ## Configuration
