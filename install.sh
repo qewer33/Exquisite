@@ -21,6 +21,7 @@ fi
 
 cd widget
 ./install.sh
+cd ..
 
 cp -R "package/." "${INSTALL_LOCATION}${PROJECT_ID}/" &&
 echo "Successfully installed ${PROJECT_ID} to ${INSTALL_LOCATION}" ||
