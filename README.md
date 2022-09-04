@@ -1,7 +1,7 @@
 <div align="center"> 
     
 # ✨ Exquisite 
-a KWin script that brings Windows 11 like window tiling to KDE Plasma
+A KWin script that allows you to tile windows in pre-defined places using a graphical interface!
     
 [KDE Store link](https://store.kde.org/p/1852610/) | [Widget KDE Store link](https://store.kde.org/p/1878384/)
 
