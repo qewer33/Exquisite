@@ -32,6 +32,7 @@ PlasmaComponents.Button {
 
         window.setMaximize(false, false);
         window.geometry = Qt.rect(screen.x + newX, screen.y + newY, newWidth, newHeight);
+        if (hideTiledWindowTitlebar) window.noBorder = true;
     }
 
     onClicked: {

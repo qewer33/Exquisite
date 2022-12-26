@@ -23,6 +23,7 @@ PlasmaCore.Dialog {
     property bool hideOnLayoutTiled: false
     property bool rememberWindowGeometries: true
     property bool tileAvailableWindowsOnBackgroundClick: true
+    property bool hideTiledWindowTitlebar: false
 
     property var oldWindowGemoetries: new Map()
 
@@ -37,6 +38,7 @@ PlasmaCore.Dialog {
         hideOnLayoutTiled = KWin.readConfig("hideOnLayoutTiled", false);
         rememberWindowGeometries = KWin.readConfig("rememberWindowGeometries", true);
         tileAvailableWindowsOnBackgroundClick = KWin.readConfig("tileAvailableWindowsOnBackgroundClick", true);
+        hideTiledWindowTitlebar = KWin.readConfig("hideTiledWindowTitlebar", false);
     }
 
     function show() {
@@ -158,6 +160,8 @@ PlasmaCore.Dialog {
                         oldWindowGemoetries.delete(focusedWindow);
                     }
                 }
+
+                if (hideTiledWindowTitlebar) workspace.activeClient.noBorder = false;
             }
         }
     }

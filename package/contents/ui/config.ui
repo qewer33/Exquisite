@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>554</width>
-    <height>458</height>
+    <height>486</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -244,6 +244,13 @@
         </property>
         <property name="checked">
          <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="kcfg_hideTiledWindowTitlebar">
+        <property name="text">
+         <string>Hide titlebar of tiled windows</string>
         </property>
        </widget>
       </item>
