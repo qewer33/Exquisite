@@ -56,6 +56,10 @@ PlasmaCore.Dialog {
         }
     }
 
+    function hide() {
+        mainDialog.visible = false;
+    }
+
     ColumnLayout {
         id: mainColumnLayout
 
@@ -174,7 +178,7 @@ PlasmaCore.Dialog {
             "Ctrl+Alt+D",
             function() {
                 if (mainDialog.visible) {
-                    mainDialog.visible = false;
+                    mainDialog.hide();
                 } else {
                     mainDialog.loadConfig();
                     mainDialog.show();

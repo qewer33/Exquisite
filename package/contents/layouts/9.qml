@@ -1,19 +1,25 @@
 import QtQuick 2.5
 
 Item {
-    property string name: "1:3 Left Sidebar"
+    property string name: "Three Horizontal Split"
     property var windows: [
         {
             row: 0,
-            rowSpan: 3,
+            rowSpan: 12,
             column: 0,
-            columnSpan: 12
+            columnSpan: 4
         },
         {
-            row: 0,
-            rowSpan: 9,
-            column: 3,
-            columnSpan: 12
+            row: 4,
+            rowSpan: 12,
+            column: 0,
+            columnSpan: 4
+        },
+        {
+            row: 8,
+            rowSpan: 12,
+            column: 0,
+            columnSpan: 4
         }
     ]
 }
