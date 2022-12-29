@@ -1,20 +1,12 @@
  #!/usr/bin/env bash
 
-get_project_id() {
-    line=$(grep "^X-KDE-PluginInfo-Name" package/metadata.desktop)
-    IFS='='
-    read -ra array <<< "${line}"
-    projectid=${array[1]}
-    echo "${projectid}"
-}
-
-PROJECT_ID=$(get_project_id)
+PACKAGE_NAME=$(kreadconfig5 --file="${PWD}/package/metadata.desktop" --group="Desktop Entry" --key="X-KDE-PluginInfo-Name")
 INSTALL_LOCATION="${HOME}/.local/share/kwin/scripts/"
 
-echo "Installing ${PROJECT_ID}"
+echo "Installing PACKAGE_NAME"
 
 if [ ! -d "${INSTALL_LOCATION}" ]; then
-    mkdir -p "${INSTALL_LOCATION}${PROJECT_ID}"
+    mkdir -p "${INSTALL_LOCATION}${PACKAGE_NAME}"
 else
     echo "Skipping directory creation: directory exists"
 fi
@@ -23,6 +15,6 @@ cd widget
 ./install.sh
 cd ..
 
-cp -R "package/." "${INSTALL_LOCATION}${PROJECT_ID}/" &&
-echo "Successfully installed ${PROJECT_ID} to ${INSTALL_LOCATION}" ||
+cp -R "package/." "${INSTALL_LOCATION}${PACKAGE_NAME}/" &&
+echo "Successfully installed ${PACKAGE_NAME} to ${INSTALL_LOCATION}" ||
 echo "Installation failed"
