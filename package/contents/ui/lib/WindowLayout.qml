@@ -17,7 +17,7 @@ PlasmaComponents.Button {
     property var windows
     property var clickedWindows: []
 
-    function tileWindow(window, row, rowSpan, column, columnSpan) {
+    function tileWindow(window, x, y, width, height) {
         if (!window.normalWindow) return;
         if (rememberWindowGeometries && !oldWindowGemoetries.has(window)) oldWindowGemoetries.set(window, [window.geometry.width, window.geometry.height]);
 
@@ -26,36 +26,36 @@ PlasmaComponents.Button {
         let xMult = screen.width / 12.0;
         let yMult = screen.height / 12.0;
 
-        let newX = column * xMult;
-        let newY = row * yMult;
-        let newWidth = rowSpan * xMult;
-        let newHeight = columnSpan * yMult;
+        let newX = x * xMult;
+        let newY = y * yMult;
+        let newWidth = width * xMult;
+        let newHeight = height * yMult;
 
         window.setMaximize(false, false);
         window.geometry = Qt.rect(screen.x + newX, screen.y + newY, newWidth, newHeight);
         if (hideTiledWindowTitlebar) window.noBorder = true;
     }
 
-    onClicked: {
-        if (tileAvailableWindowsOnBackgroundClick) {
-            let clientList = [];
-            for (let i = 0; i < workspace.clientList().length; i++) {
-                let client = workspace.clientList()[i];
-                if (client.normalWindow && workspace.currentDesktop === client.desktop &&
-                    !client.minimized && client.screen === workspace.activeScreen)
-                    clientList.push(client);
-            }
-
-            for (let i = 0; i < clientList.length; i++) {
-                if (i >= windows.length || i >= clientList.length) return;
-                let client = clientList[i];
-                tileWindow(client, windows[i].row, windows[i].rowSpan, windows[i].column, windows[i].columnSpan);
-                workspace.activeClient = client;
-            }
-
-            if (hideOnFirstTile || hideOnLayoutTiled) mainDialog.visible = false;
+    function autotileWindows() {
+        let clientList = [];
+        for (let i = 0; i < workspace.clientList().length; i++) {
+            let client = workspace.clientList()[i];
+            if (client.normalWindow && workspace.currentDesktop === client.desktop &&
+                !client.minimized && client.screen === workspace.activeScreen)
+                clientList.push(client);
         }
+
+        for (let i = 0; i < clientList.length; i++) {
+            if (i >= windows.length || i >= clientList.length) return;
+            let client = clientList[i];
+            tileWindow(client, windows[i].x, windows[i].y, windows[i].width, windows[i].height);
+            workspace.activeClient = client;
+        }
+
+        if (hideOnFirstTile || hideOnLayoutTiled) mainDialog.visible = false;
     }
+
+    onClicked: if (tileAvailableWindowsOnBackgroundClick) autotileWindows();
 
     SpanGridLayout {
         anchors.fill: parent
@@ -67,13 +67,12 @@ PlasmaComponents.Button {
             model: windows.length
 
             PlasmaComponents.Button {
-                Layout.row: windows[index].row
-                Layout.rowSpan: windows[index].rowSpan
-                Layout.column: windows[index].column
-                Layout.columnSpan: windows[index].columnSpan
-
+                Layout.row: windows[index].y || windows[index].row
+                Layout.rowSpan: windows[index].width || windows[index].rowSpan
+                Layout.column: windows[index].x || windows[index].column
+                Layout.columnSpan: windows[index].height || windows[index].columnSpan
                 onClicked: {
-                    tileWindow(workspace.activeClient, windows[index].row, windows[index].rowSpan, windows[index].column, windows[index].columnSpan);
+                    tileWindow(workspace.activeClient, windows[index].x, windows[index].y, windows[index].width, windows[index].height);
 
                     if (!clickedWindows.includes(windows[index])) clickedWindows.push(windows[index]);
 

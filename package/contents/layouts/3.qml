@@ -4,22 +4,22 @@ Item {
     property string name: "One Left Two Right"
     property var windows: [
         {
-            row: 0,
-            rowSpan: 6,
-            column: 0,
-            columnSpan: 12
+            x: 6,
+            y: 0,
+            width: 6,
+            height: 6
         },
         {
-            row: 0,
-            rowSpan: 6,
-            column: 6,
-            columnSpan: 6
+            x: 6,
+            y: 6,
+            width: 6,
+            height: 6
         },
         {
-            row: 6,
-            rowSpan: 6,
-            column: 6,
-            columnSpan: 6
+            x: 0,
+            y: 0,
+            width: 6,
+            height: 12
         }
     ]
 }

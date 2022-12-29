@@ -1,25 +1,25 @@
 import QtQuick 2.5
 
 Item {
-    property string name: "Three Horizontal Split"
+    property string name: "1:2:1 Triple Horizontal Split"
     property var windows: [
         {
             x: 0,
             y: 0,
             width: 12,
-            height: 4
+            height: 3
         },
         {
             x: 0,
-            y: 4,
+            y: 3,
             width: 12,
-            height: 4
+            height: 6
         },
         {
             x: 0,
-            y: 8,
+            y: 9,
             width: 12,
-            height: 4
+            height: 3
         }
     ]
 }

@@ -171,11 +171,11 @@ PlasmaCore.Dialog {
 
                         scale: animationsEnabled ? visible ? 1.0 : 0.5 : 1.0
                         Behavior on scale {
-                            NumberAnimation  { duration: 300 ; easing.type: Easing.OutQuad  }
+                            NumberAnimation  { duration: 400 ; easing.type: Easing.OutQuad  }
                         }
-                        opacity: animationsEnabled ? visible ? 1.0 : 0 : 1.0
+                        opacity: animationsEnabled ? visible ? 1.0 : 0.3 : 1.0
                         Behavior on opacity {
-                            NumberAnimation  { duration: 300 }
+                            NumberAnimation  { duration: 550 }
                         }
                     }
                 }
