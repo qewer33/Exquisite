@@ -1,3 +1,20 @@
+# 1.0 Indev
+
+### Features
+
+- Exquisite now has pages!
+    - This allows you to add as many layouts as you want and still be able to access them without the Exquisite window becoming larger
+    - If you don't like this change, you can disable it by unchecking the "Show pages UI" option in Exquisite settings
+- Completely revamped the settings dialog
+    - Now with tabs!
+- New "Hide titlebars of tiled windows" option, disabled by default
+- New "Tile Scale" option to adjust the size of Exquisite's window tiles, 1.3 by default
+- 8 more layouts added. Exquisite now has 16 layouts by default
+
+### Bug Fixes
+
+- Autotiling now only tiles windows on the current screen
+
 # 0.4 Release
 
 ### Features
