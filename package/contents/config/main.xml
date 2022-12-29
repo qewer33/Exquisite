@@ -7,11 +7,23 @@
     <group name="">
 
         <entry name="columns" type="Int">
-            <default>5</default>
+            <default>4</default>
+        </entry>
+
+        <entry name="rows" type="Int">
+            <default>2</default>
         </entry>
 
         <entry name="position" type="Int">
             <default>1</default>
+        </entry>
+
+        <entry name="tileScale" type="Double">
+            <default>1.3</default>
+        </entry>
+
+        <entry name="showPagesUI" type="Bool">
+            <default>true</default>
         </entry>
 
         <entry name="showHeader" type="Bool">
@@ -23,6 +35,10 @@
         </entry>
 
         <entry name="showHelpButton" type="Bool">
+            <default>true</default>
+        </entry>
+
+        <entry name="enableAnimations" type="Bool">
             <default>true</default>
         </entry>
 
