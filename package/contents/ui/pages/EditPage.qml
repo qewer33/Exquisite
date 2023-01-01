@@ -7,20 +7,26 @@ import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.components 3.0 as PlasmaComponents
 import org.kde.kwin 2.0
 
+import "../lib"
+
 RowLayout {
     id: root
+
     property int cellWidth: 40
     property int cellHeight: 20
     property var windows: []
+    property string layoutName: "New Layout e"
 
     function refresh() {
-        windowGridRepeater.model = undefined;
-        windowGridRepeater.model = 12*12;
         let i = windowListView.currentIndex;
         windowListView.model = undefined;
         windowListView.model = windows;
         windowListView.currentIndex = i;
+        windowGridRepeater.model = undefined;
+        windowGridRepeater.model = 12*12;
     }
+
+    Item { Layout.fillWidth: true }
 
     ColumnLayout {
         width: 150
@@ -30,7 +36,7 @@ RowLayout {
             id: addButton
             text: "Add Window"
             icon.name: "list-add-symbolic"
-            Layout.fillWidth: true
+            implicitWidth: 150
 
             onClicked: {
                 let randomColor = Qt.rgba(Math.random(),Math.random(),Math.random(),1);
@@ -65,8 +71,8 @@ RowLayout {
                 color: PlasmaCore.Theme.highlightColor
                 radius: 2
                 height: addButton.height
-                width: !scrollBar.visible ? parent.width : parent.width - scrollBar.width
-                y:  windowListView.currentItem.y
+                width: !scrollBar.visible ? windowListView.width : windowListView.width - scrollBar.width
+                y: windowListView.currentItem ? windowListView.currentItem.y : 0
             }
             delegate: MouseArea {
                 id: delegateMouseArea
@@ -98,65 +104,59 @@ RowLayout {
         }
     }
 
-    Item {
-        width:  childrenRect.width
-        height: childrenRect.height
+    GridLayout {
+        id: grid
+        rowSpacing: 0
+        columnSpacing: 0
+        columns: 12
+        rows: 12
+        Layout.fillHeight: true
+        Layout.fillWidth: true
 
-        GridLayout {
-            id: grid
-            rowSpacing: 0
-            columnSpacing: 0
-            columns: 12
-            rows: 12
-            Layout.fillHeight: true
+        property bool dragging: false
+        property int currentX: 0
+        property int currentY: 0
+        property int clickX: 0
+        property int clickY: 0
 
-            property bool dragging: false
-            property int currentX: 0
-            property int currentY: 0
-            property int clickX: 0
-            property int clickY: 0
-            property int releaseX: 0
-            property int releaseY: 0
+        Repeater {
+            id: windowGridRepeater
+            model: 12*12
 
-            Repeater {
-                id: windowGridRepeater
-                model: 12*12
+            Rectangle {
+                property int rectY: Math.floor(index/12)
+                property int rectX: index - rectY*12
 
-                Rectangle {
-                    property int rectY: Math.floor(index/12)
-                    property int rectX: index - rectY*12
+                implicitWidth: cellWidth
+                implicitHeight: cellHeight
+                color: {
+                    for (let i in windows) {
+                        let window = windows.slice().reverse()[i];
 
-                    implicitWidth: cellWidth
-                    implicitHeight: cellHeight
-                    color: {
-                        for (let i in windows) {
-                            let window = windows.slice().reverse()[i];
-
-                            if (grid.dragging && rectX >= grid.clickX && rectX <= grid.currentX &&
-                                rectY >= grid.clickY && rectY <= grid.currentY) {
-                                return PlasmaCore.Theme.highlightColor;
-                            }
-
-                            if (rectX >= window.x && rectX < window.x + window.width &&
-                                rectY >= window.y && rectY < window.y + window.height) {
-                                return window.color;
-                            }
+                        if (grid.dragging && rectX >= grid.clickX && rectX <= grid.currentX &&
+                            rectY >= grid.clickY && rectY <= grid.currentY) {
+                            return PlasmaCore.Theme.highlightColor;
                         }
-                        return PlasmaCore.Theme.disabledTextColor;
-                    }
-                    border.color: {
-                        for (let i in windows) {
-                            let window = windows[i];
 
-                            if (rectX >= window.x && rectX < window.x + window.width &&
-                                rectY >= window.y && rectY < window.y + window.height) {
-                                if (i == windowListView.currentIndex) return PlasmaCore.Theme.highlightColor;
-                            }
+                        if (rectX >= window.x && rectX < window.x + window.width &&
+                            rectY >= window.y && rectY < window.y + window.height) {
+                            return window.color;
                         }
-                        return PlasmaCore.Theme.backgroundColor;
                     }
-                    border.width: 1
+                    return PlasmaCore.Theme.disabledTextColor;
                 }
+                border.color: {
+                    for (let i in windows) {
+                        let window = windows[i];
+
+                        if (rectX >= window.x && rectX < window.x + window.width &&
+                            rectY >= window.y && rectY < window.y + window.height) {
+                            if (i == windowListView.currentIndex) return PlasmaCore.Theme.highlightColor;
+                        }
+                    }
+                    return PlasmaCore.Theme.backgroundColor;
+                }
+                border.width: 1
             }
         }
 
@@ -164,11 +164,13 @@ RowLayout {
             anchors.fill: parent
 
             function getRectX() {
-                return Math.round((mouseX - grid.x - root.cellWidth/2) / (root.cellWidth + grid.columnSpacing));
+                var pos = grid.mapToItem(grid, 0, 0);
+                return Math.round((mouseX - pos.x - root.cellWidth/2) / root.cellWidth);
             }
 
             function getRectY() {
-                return Math.round((mouseY - root.y + root.cellHeight*1.5) / (root.cellHeight + grid.rowSpacing));
+                var pos = grid.mapToItem(grid, 0, 0);
+                return Math.round((mouseY - pos.y - root.cellHeight/2) / root.cellHeight);
             }
 
             onPressed: {
@@ -183,20 +185,20 @@ RowLayout {
             onPositionChanged: {
                 grid.currentX = getRectX();
                 grid.currentY = getRectY();
-                grid.releaseX = getRectX();
-                grid.releaseY = getRectY();
             }
             onReleased: {
                 grid.dragging = false;
                 windows[windowListView.currentIndex] = {
                     x: grid.clickX,
                     y: grid.clickY,
-                    width: grid.releaseX - grid.clickX + 1,
-                    height: grid.releaseY - grid.clickY + 1,
+                    width: grid.currentX - grid.clickX + 1,
+                    height: grid.currentY - grid.clickY + 1,
                     color: windows[windowListView.currentIndex].color
                 };
                 refresh();
             }
         }
     }
+
+    Item { Layout.fillWidth: true }
 }

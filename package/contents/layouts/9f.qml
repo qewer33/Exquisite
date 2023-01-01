@@ -1,7 +1,7 @@
 import QtQuick 2.5
 
 Item {
-    property string name: "6 Tile Grid"
+    property string name: "Six Tile Grid"
     property var windows: [
         {
             x: 0,

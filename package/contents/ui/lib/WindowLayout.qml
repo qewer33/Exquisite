@@ -14,8 +14,13 @@ PlasmaComponents.Button {
     implicitWidth: 160*tileScale * PlasmaCore.Units.devicePixelRatio
     implicitHeight: 90*tileScale * PlasmaCore.Units.devicePixelRatio
 
-    property var windows
+    property bool isDefault: false
+    property bool showName: false
+    property string name: ""
+    property var windows: []
     property var clickedWindows: []
+
+    text: showName ? name : ""
 
     function tileWindow(window, x, y, width, height) {
         if (!window.normalWindow) return;
@@ -67,10 +72,10 @@ PlasmaComponents.Button {
             model: windows.length
 
             PlasmaComponents.Button {
-                Layout.row: windows[index].y || windows[index].row
-                Layout.rowSpan: windows[index].width || windows[index].rowSpan
-                Layout.column: windows[index].x || windows[index].column
-                Layout.columnSpan: windows[index].height || windows[index].columnSpan
+                Layout.row: windows[index].y
+                Layout.rowSpan: windows[index].width
+                Layout.column: windows[index].x
+                Layout.columnSpan: windows[index].height
                 onClicked: {
                     tileWindow(workspace.activeClient, windows[index].x, windows[index].y, windows[index].width, windows[index].height);
 
@@ -82,6 +87,35 @@ PlasmaComponents.Button {
                         mainDialog.visible = false;
                     }
                 }
+            }
+        }
+    }
+
+    RowLayout {
+        anchors.right: parent.right;
+        anchors.bottom: parent.bottom;
+        anchors.rightMargin: 5
+        anchors.bottomMargin: 5
+
+        PlasmaComponents.Button {
+            icon.name: "delete"
+            visible: showName && !isDefault
+            onClicked: {
+                fileIO.remove(name, "/home/qewer33/.config/exquisite/customLayouts/");
+                root.visible = false;
+            }
+        }
+
+        PlasmaComponents.Button {
+            icon.name: "edit-symbolic"
+            visible: showName && !isDefault
+            onClicked: {
+                editPage.layoutName = name;
+                fileIO.load(name, "/home/qewer33/.config/exquisite/customLayouts/");
+                // hacky way to wait for fileIO load
+                let timer = Qt.createQmlObject("import QtQuick 2.0; Timer { interval: 100; repeat: false; }", root);
+                timer.triggered.connect(() => { editPage.windows = fileIO.windows; console.log(editPage.windows); layoutEditMode = true; });
+                timer.start();
             }
         }
     }

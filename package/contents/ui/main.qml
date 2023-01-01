@@ -11,6 +11,9 @@ import "lib"
 
 PlasmaCore.Dialog {
     id: mainDialog
+    width: viewPage.width + 2*PlasmaCore.Units.mediumSpacing
+    height: mainColumnLayout.height + PlasmaCore.Units.mediumSpacing
+    type: PlasmaCore.Dialog.WindowType.AppletPopup
     location: PlasmaCore.Types.Floating
     flags: Qt.X11BypassWindowManagerHint | Qt.FramelessWindowHint
     visible: false
@@ -30,6 +33,9 @@ PlasmaCore.Dialog {
     property bool rememberWindowGeometries: true
     property bool tileAvailableWindowsOnBackgroundClick: true
     property bool hideTiledWindowTitlebar: false
+
+    property bool layoutEditMode: false
+    property bool viewEditMode: false
 
     property var oldWindowGemoetries: new Map()
 
@@ -64,6 +70,8 @@ PlasmaCore.Dialog {
             mainDialog.x = screen.x + screen.width/2 - mainDialog.width/2;
             mainDialog.y = screen.y + screen.height - mainDialog.height;
         }
+        mainDialog.raise()
+        mainDialog.requestActivate()
     }
 
     function hide() {
@@ -72,6 +80,10 @@ PlasmaCore.Dialog {
 
     ColumnLayout {
         id: mainColumnLayout
+
+        EditFileHandler {
+            id: fileIO
+        }
 
         PlasmaCore.DataSource {
             id: command
@@ -100,6 +112,63 @@ PlasmaCore.Dialog {
             RowLayout {
                 id: headerButtons
 
+                PlasmaComponents.TextField {
+                    text: editPage.layoutName
+                    visible: layoutEditMode
+                    onActiveFocusChanged: {
+                        mainDialog.raise()
+                        mainDialog.requestActivate()
+                    }
+                    onEditingFinished: {
+                        editPage.layoutName = text;
+                    }
+                }
+
+                PlasmaComponents.Button {
+                    text: "Save"
+                    icon.name: "document-save-symbolic"
+                    flat: true
+                    visible: layoutEditMode
+                    onClicked: {
+                        layoutEditMode = false;
+                        fileIO.save(editPage.layoutName.replace(/ /g, "_"), "/home/qewer33/.config/exquisite/customLayouts/", editPage.windows);
+                        viewPage.refresh();
+                    }
+                }
+
+                PlasmaComponents.Button {
+                    text: "Cancel"
+                    icon.name: "edit-delete-remove"
+                    flat: true
+                    visible: layoutEditMode
+                    onClicked: {
+                        layoutEditMode = false;
+                    }
+                }
+
+                PlasmaComponents.Button {
+                    text: "New Layout"
+                    icon.name: "list-add-symbolic"
+                    flat: true
+                    visible: !layoutEditMode
+                    onClicked: {
+                        layoutEditMode = true;
+                        editPage.layoutName = "New Layout";
+                        editPage.windows = [];
+                        editPage.refresh();
+                    }
+                }
+
+                PlasmaComponents.Button {
+                    text: !viewEditMode ? "Edit Mode" : "Exit Edit Mode"
+                    icon.name: !viewEditMode ? "edit-symbolic" : "edit-delete-remove"
+                    flat: true
+                    visible: !layoutEditMode
+                    onClicked: {
+                        viewEditMode = !viewEditMode;
+                    }
+                }
+
                 PlasmaComponents.Button {
                     text: "Restart KWin"
                     icon.name: "view-refresh-symbolic"
@@ -107,16 +176,6 @@ PlasmaCore.Dialog {
                     visible: restartButtonVisible
                     onClicked: {
                         command.exec()
-                    }
-                }
-
-                PlasmaComponents.Button {
-                    text: "Help"
-                    icon.name: "question"
-                    flat: true
-                    visible: helpButtonVisible
-                    onClicked: {
-                        Qt.openUrlExternally("https://github.com/qewer33/Exquisite#exquisite")
                     }
                 }
 
@@ -130,87 +189,14 @@ PlasmaCore.Dialog {
             }
         }
 
-        RowLayout {
-            id: mainRowLayout
-
-            PlasmaComponents.Button {
-                icon.name: "arrow-left"
-                flat: true
-                Layout.fillHeight: true
-                enabled: pageIndicator.currentPage !== 0
-                visible: pagesUIVisible
-
-                onClicked: pageIndicator.currentPage--
-            }
-
-            GridLayout {
-                id: gridLayout
-                implicitHeight: windowLayout*2
-                rowSpacing: 10
-                columnSpacing: 10
-                columns: mainDialog.columns
-                rows: mainDialog.rows
-                Layout.fillWidth: true
-
-                FolderListModel {
-                    id: folderModel
-                    folder: Qt.resolvedUrl("../") + "layouts/"
-                    nameFilters: ["*.qml"]
-                }
-
-                Repeater {
-                    model: folderModel
-
-                    WindowLayout {
-                        id: windowLayout
-
-                        Loader {
-                            id: layoutFile
-                            source: fileUrl
-                        }
-
-                        visible: index >= pageIndicator.currentPage * columns * rows && index < (pageIndicator.currentPage+1) * columns * rows
-                        windows: layoutFile.item.windows
-
-                        scale: animationsEnabled ? visible ? 1.0 : 0.5 : 1.0
-                        Behavior on scale {
-                            NumberAnimation  { duration: 400 ; easing.type: Easing.OutQuad  }
-                        }
-                        opacity: animationsEnabled ? visible ? 1.0 : 0.3 : 1.0
-                        Behavior on opacity {
-                            NumberAnimation  { duration: 550 }
-                        }
-                    }
-                }
-
-                Repeater {
-                    model: pageIndicator.pageCount * rows * columns
-
-                    Rectangle {
-                        implicitWidth: 160*tileScale * PlasmaCore.Units.devicePixelRatio
-                        implicitHeight: 90*tileScale * PlasmaCore.Units.devicePixelRatio
-                        color: "transparent"
-                        visible: pageIndicator.currentPage === pageIndicator.pageCount-1 && index >= folderModel.count && index < pageIndicator.pageCount * rows * columns
-                    }
-                }
-            }
-
-            PlasmaComponents.Button {
-                icon.name: "arrow-right"
-                flat: true
-                Layout.fillHeight: true
-                enabled: pageIndicator.currentPage !== pageIndicator.pageCount-1
-                visible: pagesUIVisible
-
-                onClicked: pageIndicator.currentPage++
-            }
+        ViewPage {
+            id: viewPage
+            visible: !layoutEditMode
         }
 
-        PageIndicator {
-            id: pageIndicator
-            Layout.alignment: Qt.AlignCenter
-            visible: pagesUIVisible
-            pageCount: Math.ceil(folderModel.count/(rows*columns))
+        EditPage {
+            id: editPage
+            visible: layoutEditMode
         }
 
         Connections {
