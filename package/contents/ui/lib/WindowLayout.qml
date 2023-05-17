@@ -45,8 +45,13 @@ PlasmaComponents.Button {
         let clientList = [];
         for (let i = 0; i < workspace.clientList().length; i++) {
             let client = workspace.clientList()[i];
-            if (client.normalWindow && workspace.currentDesktop === client.desktop &&
-                !client.minimized && client.screen === workspace.activeScreen)
+            if (
+                client.normalWindow &&
+                !client.minimized &&
+                client.desktop === workspace.currentDesktop &&
+                client.screen === workspace.activeScreen &&
+                client.activities.includes(workspace.currentActivity)
+            )
                 clientList.push(client);
         }
 
