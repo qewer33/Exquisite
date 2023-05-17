@@ -1,6 +1,7 @@
 import QtQuick 2.5
 import QtQuick.Controls 2.5
 import QtQuick.Layouts 1.0
+import QtQuick.LocalStorage 2.5
 import Qt.labs.folderlistmodel 2.15
 
 import org.kde.plasma.core 2.0 as PlasmaCore
@@ -24,6 +25,41 @@ RowLayout {
         windowListView.currentIndex = i;
         windowGridRepeater.model = undefined;
         windowGridRepeater.model = 12*12;
+    }
+
+    function save() {
+        var db = LocalStorage.openDatabaseSync("ExquisiteCustomLayouts", "1.0", "Custom layouts for the Exquisite KWin script", 1000000);
+        db.transaction(function (tx) {
+            tx.executeSql('CREATE TABLE IF NOT EXISTS Layouts(name TEXT, windows TEXT, UNIQUE(name))');
+            tx.executeSql("INSERT OR REPLACE INTO layouts (name, windows) VALUES(?, ?)", [layoutName, JSON.stringify(windows)]);
+        });
+    }
+
+    function load(_name) {
+        var db = LocalStorage.openDatabaseSync("ExquisiteCustomLayouts", "1.0", "Custom layouts for the Exquisite KWin script", 1000000);
+        db.transaction(function (tx) {
+            let res = tx.executeSql("SELECT * FROM layouts WHERE name = ?", [_name]);
+            layoutName = res.rows.item(0).name
+            windows = JSON.parse(res.rows.item(0).windows);
+            for (let i in windows) {
+                windows[i].color = Qt.rgba(Math.random(),Math.random(),Math.random(),1);
+            }
+        });
+        refresh();
+    }
+
+    function remove(_name) {
+        var db = LocalStorage.openDatabaseSync("ExquisiteCustomLayouts", "1.0", "Custom layouts for the Exquisite KWin script", 1000000);
+        db.transaction(function (tx) {
+            tx.executeSql("DELETE FROM layouts WHERE name = ?", [_name]);
+        });
+    }
+
+    Component.onCompleted: {
+        var db = LocalStorage.openDatabaseSync("ExquisiteCustomLayouts", "1.0", "Custom layouts for the Exquisite KWin script", 1000000);
+        db.transaction(function (tx) {
+            let res = tx.executeSql(`SELECT * FROM layouts`);
+        });
     }
 
     Item { Layout.fillWidth: true }
@@ -79,12 +115,19 @@ RowLayout {
                 width: !scrollBar.visible ? parent.width : parent.width - scrollBar.width
                 height: childrenRect.height
                 onClicked: {
-                    windowListView.currentIndex = index
-                    refresh()
+                    windowListView.currentIndex = index;
+                    refresh();
                 }
 
                 RowLayout {
                     width: parent.width
+
+                    Rectangle {
+                        width: 16
+                        height: 16
+                        radius: 999
+                        color: windows[index].color
+                    }
 
                     PlasmaComponents.Label {
                         text: " Window " + index
@@ -179,8 +222,6 @@ RowLayout {
                 grid.clickY = getRectY();
                 grid.currentX = getRectX();
                 grid.currentY = getRectY();
-                console.log(grid.clickX)
-                console.log(grid.clickY)
             }
             onPositionChanged: {
                 grid.currentX = getRectX();

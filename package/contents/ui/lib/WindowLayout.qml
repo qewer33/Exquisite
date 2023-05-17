@@ -31,10 +31,10 @@ PlasmaComponents.Button {
         let xMult = screen.width / 12.0;
         let yMult = screen.height / 12.0;
 
-        let newX = x * xMult;
-        let newY = y * yMult;
-        let newWidth = width * xMult;
-        let newHeight = height * yMult;
+        let newX = Math.round(x * xMult);
+        let newY = Math.round(y * yMult);
+        let newWidth = Math.round(width * xMult);
+        let newHeight = Math.round(height * yMult);
 
         window.setMaximize(false, false);
         window.geometry = Qt.rect(screen.x + newX, screen.y + newY, newWidth, newHeight);
@@ -92,8 +92,8 @@ PlasmaComponents.Button {
     }
 
     RowLayout {
-        anchors.right: parent.right;
-        anchors.bottom: parent.bottom;
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
         anchors.rightMargin: 5
         anchors.bottomMargin: 5
 
@@ -101,7 +101,7 @@ PlasmaComponents.Button {
             icon.name: "delete"
             visible: showName && !isDefault
             onClicked: {
-                fileIO.remove(name, "/home/qewer33/.config/exquisite/customLayouts/");
+                editPage.remove(name);
                 root.visible = false;
             }
         }
@@ -111,11 +111,8 @@ PlasmaComponents.Button {
             visible: showName && !isDefault
             onClicked: {
                 editPage.layoutName = name;
-                fileIO.load(name, "/home/qewer33/.config/exquisite/customLayouts/");
-                // hacky way to wait for fileIO load
-                let timer = Qt.createQmlObject("import QtQuick 2.0; Timer { interval: 100; repeat: false; }", root);
-                timer.triggered.connect(() => { editPage.windows = fileIO.windows; console.log(editPage.windows); layoutEditMode = true; });
-                timer.start();
+                editPage.load(name);
+                layoutEditMode = true;
             }
         }
     }

@@ -70,8 +70,6 @@ PlasmaCore.Dialog {
             mainDialog.x = screen.x + screen.width/2 - mainDialog.width/2;
             mainDialog.y = screen.y + screen.height - mainDialog.height;
         }
-        mainDialog.raise()
-        mainDialog.requestActivate()
     }
 
     function hide() {
@@ -80,10 +78,6 @@ PlasmaCore.Dialog {
 
     ColumnLayout {
         id: mainColumnLayout
-
-        EditFileHandler {
-            id: fileIO
-        }
 
         PlasmaCore.DataSource {
             id: command
@@ -116,12 +110,10 @@ PlasmaCore.Dialog {
                     text: editPage.layoutName
                     visible: layoutEditMode
                     onActiveFocusChanged: {
-                        mainDialog.raise()
-                        mainDialog.requestActivate()
+                        mainDialog.raise();
+                        mainDialog.requestActivate();
                     }
-                    onEditingFinished: {
-                        editPage.layoutName = text;
-                    }
+                    onEditingFinished: editPage.layoutName = text;
                 }
 
                 PlasmaComponents.Button {
@@ -131,8 +123,8 @@ PlasmaCore.Dialog {
                     visible: layoutEditMode
                     onClicked: {
                         layoutEditMode = false;
-                        fileIO.save(editPage.layoutName.replace(/ /g, "_"), "/home/qewer33/.config/exquisite/customLayouts/", editPage.windows);
-                        viewPage.refresh();
+                        editPage.save();
+                        viewPage.refreshCustomLayouts();
                     }
                 }
 
@@ -152,6 +144,8 @@ PlasmaCore.Dialog {
                     flat: true
                     visible: !layoutEditMode
                     onClicked: {
+                        mainDialog.raise();
+                        mainDialog.requestActivate();
                         layoutEditMode = true;
                         editPage.layoutName = "New Layout";
                         editPage.windows = [];

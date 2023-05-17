@@ -1,19 +1,26 @@
 # 1.0 Indev
 
 ### Features
-
-- Exquisite now has pages!
-    - This allows you to add as many layouts as you want and still be able to access them without the Exquisite window becoming larger
+- Custom layout creator!
+    - You can now create, save and edit custom Exquisite layouts with a GUI
+    - "Edit Mode" let's you manage your custom layouts
+- Multiple pages
+    - This allows you to create as many layouts as you want and still be able to access them without the Exquisite window becoming larger
     - If you don't like this change, you can disable it by unchecking the "Show pages UI" option in Exquisite settings
 - Completely revamped the settings dialog
     - Now with tabs!
 - New "Hide titlebars of tiled windows" option, disabled by default
 - New "Tile Scale" option to adjust the size of Exquisite's window tiles, 1.3 by default
-- 8 more layouts added. Exquisite now has 16 layouts by default
+- 8 more default layouts added. Exquisite now has 16 layouts by default
+
+### Changed
+- "Restart KWin" button is now disabled by default
+- Removed titlebar "Help" button
 
 ### Bug Fixes
 
 - Autotiling now only tiles windows on the current screen
+- Fix bug where on certain screen sizes and layouts windows didn't tile properly and cause windows to visually bug
 
 # 0.4 Release
 

@@ -1,6 +1,7 @@
 import QtQuick 2.5
 import QtQuick.Controls 2.5
 import QtQuick.Layouts 1.0
+import QtQuick.LocalStorage 2.5
 import Qt.labs.folderlistmodel 2.15
 
 import org.kde.plasma.core 2.0 as PlasmaCore
@@ -12,22 +13,19 @@ import "../lib"
 ColumnLayout {
     id: root
 
-    Component {
-        id: folderListModelComponent
-        FolderListModel {
-            folder: ""
-            nameFilters: []
-        }
-    }
-
-    function refresh() {
-        for (let i = 0; i < customLayoutsRepeater.count; i++) {
-            console.log(customLayoutsRepeater.itemAt(i).name + " : " + fileIO.name)
-            if (customLayoutsRepeater.itemAt(i).name === fileIO.name) {
-                customLayoutsRepeater.itemAt(i).windows = [];
-                customLayoutsRepeater.itemAt(i).windows = fileIO.windows;
+    function refreshCustomLayouts() {
+        var db = LocalStorage.openDatabaseSync("ExquisiteCustomLayouts", "1.0", "Custom layouts for the Exquisite KWin script", 1000000);
+        let rw = [];
+        db.transaction(function (tx) {
+            let res = tx.executeSql(`SELECT * FROM layouts`);
+            for (let i = 0; i < res.rows.length; i++) {
+                rw.push(res.rows.item(i));
             }
-        }
+        });
+        customLayoutsRepeater.model = undefined;
+        customLayoutsRepeater.model = rw;
+        customLayoutsRepeater.visible = false;
+        customLayoutsRepeater.visible = true;
     }
 
     RowLayout {
@@ -52,12 +50,6 @@ ColumnLayout {
             FolderListModel {
                 id: defaultLayoutsFolderModel
                 folder: Qt.resolvedUrl("../../") + "layouts/"
-                nameFilters: ["*.qml"]
-            }
-
-            FolderListModel {
-                id: customLayoutsFolderModel
-                folder: "/home/qewer33/.config/exquisite/customLayouts/"
                 nameFilters: ["*.qml"]
             }
 
@@ -92,20 +84,17 @@ ColumnLayout {
 
             Repeater {
                 id: customLayoutsRepeater
-                model: customLayoutsFolderModel
+                model: []
+
+                Component.onCompleted: refreshCustomLayouts();
 
                 WindowLayout {
                     id: windowLayout
 
-                    Loader {
-                        id: layoutFile
-                        source: fileUrl
-                    }
-
                     visible: defaultLayoutsFolderModel.count+index >= pageIndicator.currentPage * columns * rows && defaultLayoutsFolderModel.count+index < (pageIndicator.currentPage+1) * columns * rows
                     showName: viewEditMode
-                    name: layoutFile.item.name
-                    windows: layoutFile.item.windows
+                    name: modelData.name
+                    windows: JSON.parse(modelData.windows)
 
                     scale: animationsEnabled ? visible ? 1.0 : 0.5 : 1.0
                     Behavior on scale {
@@ -119,6 +108,7 @@ ColumnLayout {
             }
 
             Repeater {
+                id: fillerRepeater
                 model: pageIndicator.pageCount * rows * columns
 
                 Rectangle {
@@ -127,7 +117,7 @@ ColumnLayout {
                     color: "transparent"
                     visible: {
                         pageIndicator.currentPage === pageIndicator.pageCount-1 &&
-                        index >= defaultLayoutsFolderModel.count + customLayoutsFolderModel.count &&
+                        index >= defaultLayoutsFolderModel.count + customLayoutsRepeater.model.length &&
                         index < pageIndicator.pageCount * rows * columns
                     }
                 }
@@ -149,6 +139,6 @@ ColumnLayout {
         id: pageIndicator
         Layout.alignment: Qt.AlignCenter
         visible: pagesUIVisible
-        pageCount: Math.ceil((defaultLayoutsFolderModel.count+customLayoutsFolderModel.count)/(rows*columns))
+        pageCount: Math.ceil((16+customLayoutsRepeater.model.length)/(mainDialog.rows*mainDialog.columns))
     }
 }
