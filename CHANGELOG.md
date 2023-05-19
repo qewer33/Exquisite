@@ -4,14 +4,18 @@
 - Custom layout creator!
     - You can now create, save and edit custom Exquisite layouts with a GUI
     - "Edit Mode" let's you manage your custom layouts
+    - This feature hasn't been tested extensively, please report any bugs or issues you might have
 - Multiple pages
     - This allows you to create as many layouts as you want and still be able to access them without the Exquisite window becoming larger
     - If you don't like this change, you can disable it by unchecking the "Show pages UI" option in Exquisite settings
+- Exquisite now appears under the mouse cursor by default when activated
+    - This option is still configurable (Top, Center, Bottom and Under Mouse Cursor)
 - Completely revamped the settings dialog
     - Now with tabs!
 - New "Hide titlebars of tiled windows" option, disabled by default
 - New "Tile Scale" option to adjust the size of Exquisite's window tiles, 1.3 by default
 - 8 more default layouts added. Exquisite now has 16 layouts by default
+    - Default layouts can be edited or deleted in: ~/.local/share/kwin/scripts/exquisite/layouts
 
 ### Changed
 - "Restart KWin" button is now disabled by default
@@ -19,8 +23,8 @@
 
 ### Bug Fixes
 
-- Autotiling now only tiles windows on the current screen
-- Fix bug where on certain screen sizes and layouts windows didn't tile properly and cause windows to visually bug
+- Autotiling now only tiles windows on the current screen and current activity
+- Fix bug where on certain screen sizes and layouts, windows didn't tile properly and caused windows to visually bug
 
 # 0.4 Release
 

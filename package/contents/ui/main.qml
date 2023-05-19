@@ -18,15 +18,14 @@ PlasmaCore.Dialog {
     flags: Qt.X11BypassWindowManagerHint | Qt.FramelessWindowHint
     visible: false
 
+    property int position: 3
     property int columns: 4
     property int rows: 2
-    property int position: 1
     property double tileScale: 1.3
     property bool pagesUIVisible: true
     property bool headerVisible: true
     property bool restartButtonVisible: true
     property bool animationsEnabled: true
-    property bool helpButtonVisible: true
     property bool hideOnDesktopClick: true
     property bool hideOnFirstTile: false
     property bool hideOnLayoutTiled: false
@@ -40,14 +39,13 @@ PlasmaCore.Dialog {
     property var oldWindowGemoetries: new Map()
 
     function loadConfig(){
+        position = KWin.readConfig("position", 3);
         columns = KWin.readConfig("columns", 4);
         rows = KWin.readConfig("rows", 2);
         tileScale = KWin.readConfig("tileScale", 1.3);
-        position = KWin.readConfig("position", 1);
         pagesUIVisible = KWin.readConfig("showPagesUI", true);
         headerVisible = KWin.readConfig("showHeader", true);
         restartButtonVisible = KWin.readConfig("showRestartButton", true);
-        helpButtonVisible = KWin.readConfig("showHelpButton", true);
         animationsEnabled = KWin.readConfig("enableAnimations", true);
         hideOnDesktopClick = KWin.readConfig("hideOnDesktopClick", true);
         hideOnFirstTile = KWin.readConfig("hideOnFirstTile", false);
@@ -60,15 +58,34 @@ PlasmaCore.Dialog {
     function show() {
         var screen = workspace.clientArea(KWin.FullScreenArea, workspace.activeScreen, workspace.currentDesktop);
         mainDialog.visible = true;
-        if (position === 1) {
-            mainDialog.x = screen.x + screen.width/2 - mainDialog.width/2;
-            mainDialog.y = screen.y + screen.height/2 - mainDialog.height/2;
-        } else if (position === 0) {
-            mainDialog.x = screen.x + screen.width/2 - mainDialog.width/2;
-            mainDialog.y = screen.y;
-        } else if (position === 2) {
-            mainDialog.x = screen.x + screen.width/2 - mainDialog.width/2;
-            mainDialog.y = screen.y + screen.height - mainDialog.height;
+        switch (position) {
+            case 0:
+                mainDialog.x = screen.x + screen.width/2 - mainDialog.width/2;
+                mainDialog.y = screen.y;
+                break;
+            case 1:
+                mainDialog.x = screen.x + screen.width/2 - mainDialog.width/2;
+                mainDialog.y = screen.y + screen.height/2 - mainDialog.height/2;
+                break;
+            case 2:
+                mainDialog.x = screen.x + screen.width/2 - mainDialog.width/2;
+                mainDialog.y = screen.y + screen.height - mainDialog.height;
+                break;
+            case 3:
+                if (workspace.cursorPos.x > screen.x + screen.width - mainDialog.width/2)
+                    mainDialog.x = workspace.cursorPos.x - mainDialog.width;
+                else if (workspace.cursorPos.x < screen.x + mainDialog.width/2)
+                    mainDialog.x = workspace.cursorPos.x;
+                else
+                    mainDialog.x = workspace.cursorPos.x - mainDialog.width/2;
+
+                if (workspace.cursorPos.y > screen.y + screen.height - mainDialog.height/2)
+                    mainDialog.y = workspace.cursorPos.y - mainDialog.height;
+                else if (workspace.cursorPos.y < screen.y + mainDialog.height/2)
+                    mainDialog.y = workspace.cursorPos.y;
+                else
+                    mainDialog.y = workspace.cursorPos.y - mainDialog.height/2;
+                break;
         }
     }
 

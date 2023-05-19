@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>558</width>
-    <height>386</height>
+    <width>618</width>
+    <height>403</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -36,7 +36,8 @@
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="icon">
-       <iconset theme="preferences-desktop-color"/>
+       <iconset theme="preferences-desktop-color">
+        <normaloff>.</normaloff>.</iconset>
       </attribute>
       <attribute name="title">
        <string>Appereance</string>
@@ -117,10 +118,10 @@
             </sizepolicy>
            </property>
            <property name="currentText">
-            <string>Center</string>
+            <string>Top</string>
            </property>
            <property name="currentIndex">
-            <number>1</number>
+            <number>0</number>
            </property>
            <item>
             <property name="text">
@@ -135,6 +136,11 @@
            <item>
             <property name="text">
              <string>Bottom</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Under mouse cursor</string>
             </property>
            </item>
           </widget>
@@ -223,25 +229,6 @@
         </widget>
        </item>
        <item>
-        <widget class="QCheckBox" name="kcfg_showHelpButton">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>Show &quot;Help&quot; button on header</string>
-         </property>
-         <property name="checkable">
-          <bool>true</bool>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QCheckBox" name="kcfg_enableAnimations">
          <property name="text">
           <string>Enable animations</string>
@@ -255,7 +242,8 @@
      </widget>
      <widget class="QWidget" name="tab_2">
       <attribute name="icon">
-       <iconset theme="preferences"/>
+       <iconset theme="preferences">
+        <normaloff>.</normaloff>.</iconset>
       </attribute>
       <attribute name="title">
        <string>Behavior</string>
@@ -266,18 +254,6 @@
        </property>
        <property name="sizeConstraint">
         <enum>QLayout::SetDefaultConstraint</enum>
-       </property>
-       <property name="leftMargin">
-        <number>6</number>
-       </property>
-       <property name="topMargin">
-        <number>6</number>
-       </property>
-       <property name="rightMargin">
-        <number>6</number>
-       </property>
-       <property name="bottomMargin">
-        <number>6</number>
        </property>
        <item>
         <widget class="QCheckBox" name="kcfg_hideOnLayoutTiled">
@@ -294,7 +270,7 @@
           <bool>false</bool>
          </property>
          <property name="text">
-          <string>Hide after a layout is tiled (all windows in a layout has been clicked)</string>
+          <string>Hide after tiling a layout (all windows in a layout has been clicked)</string>
          </property>
         </widget>
        </item>
@@ -337,7 +313,8 @@
      </widget>
      <widget class="QWidget" name="tab_3">
       <attribute name="icon">
-       <iconset theme="preferences-desktop-virtual"/>
+       <iconset theme="preferences-desktop-virtual">
+        <normaloff>.</normaloff>.</iconset>
       </attribute>
       <attribute name="title">
        <string>Tiling</string>
@@ -378,7 +355,7 @@
        <item>
         <widget class="QCheckBox" name="kcfg_hideTiledWindowTitlebar">
          <property name="text">
-          <string>Hide titlebar of tiled windows</string>
+          <string>Hide titlebars of tiled windows</string>
          </property>
         </widget>
        </item>
@@ -389,7 +366,8 @@
      </widget>
      <widget class="QWidget" name="tab_4">
       <attribute name="icon">
-       <iconset theme="configure-shortcuts"/>
+       <iconset theme="configure-shortcuts">
+        <normaloff>.</normaloff>.</iconset>
       </attribute>
       <attribute name="title">
        <string>Shortcuts</string>
@@ -404,8 +382,7 @@
        <item>
         <widget class="QLabel" name="label_7">
          <property name="text">
-          <string>To configure the shortcuts of this script: 
- Go to System Settings -&gt; Shortcuts -&gt; KWin and search for &quot;Exquisite&quot;</string>
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;To configure the shortcuts of this script: &lt;/p&gt;&lt;p&gt;Go to &amp;quot;System Settings -&amp;gt; Shortcuts -&amp;gt; KWin&amp;quot; and search for &amp;quot;Exquisite&amp;quot;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>

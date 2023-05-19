@@ -6,16 +6,16 @@
     <kcfgfile name=""/>
     <group name="">
 
+        <entry name="position" type="Int">
+            <default>3</default>
+        </entry>
+
         <entry name="columns" type="Int">
             <default>4</default>
         </entry>
 
         <entry name="rows" type="Int">
             <default>2</default>
-        </entry>
-
-        <entry name="position" type="Int">
-            <default>1</default>
         </entry>
 
         <entry name="tileScale" type="Double">
@@ -31,10 +31,6 @@
         </entry>
 
         <entry name="showRestartButton" type="Bool">
-            <default>true</default>
-        </entry>
-
-        <entry name="showHelpButton" type="Bool">
             <default>true</default>
         </entry>
 

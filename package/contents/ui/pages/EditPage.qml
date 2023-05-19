@@ -12,6 +12,8 @@ import "../lib"
 
 RowLayout {
     id: root
+    implicitWidth: 160*tileScale * PlasmaCore.Units.devicePixelRatio
+    implicitHeight: 90*tileScale * PlasmaCore.Units.devicePixelRatio
 
     property int cellWidth: 40
     property int cellHeight: 20
@@ -33,6 +35,7 @@ RowLayout {
             tx.executeSql('CREATE TABLE IF NOT EXISTS Layouts(name TEXT, windows TEXT, UNIQUE(name))');
             tx.executeSql("INSERT OR REPLACE INTO layouts (name, windows) VALUES(?, ?)", [layoutName, JSON.stringify(windows)]);
         });
+        viewPage.refreshCustomLayouts();
     }
 
     function load(_name) {
@@ -53,6 +56,7 @@ RowLayout {
         db.transaction(function (tx) {
             tx.executeSql("DELETE FROM layouts WHERE name = ?", [_name]);
         });
+        viewPage.refreshCustomLayouts();
     }
 
     Component.onCompleted: {
