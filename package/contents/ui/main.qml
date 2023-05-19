@@ -18,7 +18,7 @@ PlasmaCore.Dialog {
     flags: Qt.X11BypassWindowManagerHint | Qt.FramelessWindowHint
     visible: false
 
-    property int position: 3
+    property int position: workspace.cursorPos ? 3 : 1
     property int columns: 4
     property int rows: 2
     property double tileScale: 1.3
@@ -39,7 +39,7 @@ PlasmaCore.Dialog {
     property var oldWindowGemoetries: new Map()
 
     function loadConfig(){
-        position = KWin.readConfig("position", 3);
+        position = KWin.readConfig("position", workspace.cursorPos ? 3 : 1);
         columns = KWin.readConfig("columns", 4);
         rows = KWin.readConfig("rows", 2);
         tileScale = KWin.readConfig("tileScale", 1.3);
