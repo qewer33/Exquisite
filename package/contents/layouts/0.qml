@@ -4,16 +4,16 @@ Item {
     property string name: "Two Vertical Split"
     property var windows: [
         {
-            x: 0,
-            y: 0,
-            width: 6,
-            height: 12
+            row: 0,
+            rowSpan: 6,
+            column: 0,
+            columnSpan: 12
         },
         {
-            x: 6,
-            y: 0,
-            width: 6,
-            height: 12
+            row: 0,
+            rowSpan: 6,
+            column: 6,
+            columnSpan: 12
         }
     ]
 }

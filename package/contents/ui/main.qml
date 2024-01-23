@@ -1,29 +1,23 @@
 import QtQuick 2.0
 import QtQuick.Layouts 1.0
 import Qt.labs.folderlistmodel 2.15
-
 import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.components 3.0 as PlasmaComponents
 import org.kde.kwin 2.0
 
-import "pages"
 import "lib"
 
 PlasmaCore.Dialog {
     id: mainDialog
-    width: viewPage.width + 2*PlasmaCore.Units.mediumSpacing
-    height: mainColumnLayout.height + PlasmaCore.Units.mediumSpacing
-    type: PlasmaCore.Dialog.WindowType.AppletPopup
     location: PlasmaCore.Types.Floating
     flags: Qt.X11BypassWindowManagerHint | Qt.FramelessWindowHint
     visible: false
 
-    property int position: workspace.cursorPos ? 3 : 1
-    property int columns: 4
-    property int rows: 2
+    property int columns: 5
+    property int position: 1
     property double tileScale: 1.3
-    property bool pagesUIVisible: true
     property bool headerVisible: true
+    property bool activeWindowLabelVisible: true
     property bool restartButtonVisible: true
     property bool animationsEnabled: true
     property bool hideOnDesktopClick: true
@@ -33,18 +27,14 @@ PlasmaCore.Dialog {
     property bool tileAvailableWindowsOnBackgroundClick: true
     property bool hideTiledWindowTitlebar: false
 
-    property bool layoutEditMode: false
-    property bool viewEditMode: false
-
     property var oldWindowGemoetries: new Map()
 
     function loadConfig(){
-        position = KWin.readConfig("position", workspace.cursorPos ? 3 : 1);
-        columns = KWin.readConfig("columns", 4);
-        rows = KWin.readConfig("rows", 2);
+        columns = KWin.readConfig("columns", 5);
+        position = KWin.readConfig("position", 1);
         tileScale = KWin.readConfig("tileScale", 1.3);
-        pagesUIVisible = KWin.readConfig("showPagesUI", true);
         headerVisible = KWin.readConfig("showHeader", true);
+        activeWindowLabelVisible = KWin.readConfig("showActiveWindowLabel", true);
         restartButtonVisible = KWin.readConfig("showRestartButton", true);
         animationsEnabled = KWin.readConfig("enableAnimations", true);
         hideOnDesktopClick = KWin.readConfig("hideOnDesktopClick", true);
@@ -103,7 +93,6 @@ PlasmaCore.Dialog {
             onNewData: {
                 disconnectSource(sourceName);
             }
-
             function exec() {
                 mainDialog.visible = false;
                 connectSource(`bash ${Qt.resolvedUrl("./").replace(/^(file:\/{2})/,"")}restartKWin.sh`);
@@ -113,101 +102,72 @@ PlasmaCore.Dialog {
         RowLayout {
             id: headerRowLayout
             visible: mainDialog.headerVisible
-            Layout.fillWidth: true
 
             PlasmaComponents.Label {
                 text: " Exquisite"
-                Layout.fillWidth: true
             }
 
-            RowLayout {
-                id: headerButtons
+            Item { Layout.fillWidth: true }
 
-                PlasmaComponents.TextField {
-                    text: editPage.layoutName
-                    visible: layoutEditMode
-                    onActiveFocusChanged: {
-                        mainDialog.raise();
-                        mainDialog.requestActivate();
-                    }
-                    onEditingFinished: editPage.layoutName = text;
+            PlasmaCore.FrameSvgItem {
+                width: 22
+                height: width
+                visible: activeWindowLabelVisible
+
+                PlasmaCore.IconItem {
+                    anchors.fill: parent
+                    source: workspace.activeClient.icon
                 }
+            }
 
-                PlasmaComponents.Button {
-                    text: "Save"
-                    icon.name: "document-save-symbolic"
-                    flat: true
-                    visible: layoutEditMode
-                    onClicked: {
-                        layoutEditMode = false;
-                        editPage.save();
-                        viewPage.refreshCustomLayouts();
-                    }
+            PlasmaComponents.Label {
+                visible: activeWindowLabelVisible
+                text: workspace.activeClient.caption
+            }
+
+            Item { Layout.fillWidth: true }
+
+            PlasmaComponents.Button {
+                text: "Restart KWin"
+                icon.name: "view-refresh-symbolic"
+                visible: restartButtonVisible
+                onClicked: {
+                    command.exec()
                 }
+            }
 
-                PlasmaComponents.Button {
-                    text: "Cancel"
-                    icon.name: "edit-delete-remove"
-                    flat: true
-                    visible: layoutEditMode
-                    onClicked: {
-                        layoutEditMode = false;
-                    }
-                }
-
-                PlasmaComponents.Button {
-                    text: "New Layout"
-                    icon.name: "list-add-symbolic"
-                    flat: true
-                    visible: !layoutEditMode
-                    onClicked: {
-                        mainDialog.raise();
-                        mainDialog.requestActivate();
-                        layoutEditMode = true;
-                        editPage.layoutName = "New Layout";
-                        editPage.windows = [];
-                        editPage.refresh();
-                    }
-                }
-
-                PlasmaComponents.Button {
-                    text: !viewEditMode ? "Edit Mode" : "Exit Edit Mode"
-                    icon.name: !viewEditMode ? "edit-symbolic" : "edit-delete-remove"
-                    flat: true
-                    visible: !layoutEditMode
-                    onClicked: {
-                        viewEditMode = !viewEditMode;
-                    }
-                }
-
-                PlasmaComponents.Button {
-                    text: "Restart KWin"
-                    icon.name: "view-refresh-symbolic"
-                    flat: true
-                    visible: restartButtonVisible
-                    onClicked: {
-                        command.exec()
-                    }
-                }
-
-                PlasmaComponents.Button {
-                    icon.name: "dialog-close"
-                    flat: true
-                    onClicked: {
-                        mainDialog.visible = false;
-                    }
+            PlasmaComponents.Button {
+                icon.name: "dialog-close"
+                onClicked: {
+                    mainDialog.visible = false;
                 }
             }
         }
 
-        ViewPage {
-            id: viewPage
-            visible: !layoutEditMode
-        }
+        GridLayout {
+            id: gridLayout
+            rowSpacing: 10
+            columnSpacing: 10
+            columns: mainDialog.columns
 
-        EditPage {
-            id: editPage
-            visible: layoutEditMode
+            Repeater {
+                model: FolderListModel {
+                    id: folderModel
+
+                    folder: Qt.resolvedUrl("../") + "layouts/"
+
+                    nameFilters: ["*.qml"]
+                }
+
+                WindowLayout {
+                    Loader {
+                        id: layoutFile
+                        source: fileUrl
+                    }
+
+                    windows: layoutFile.item.windows
+                }
+            }
         }
 
         Connections {

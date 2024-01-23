@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>618</width>
-    <height>403</height>
+    <width>587</width>
+    <height>330</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -73,19 +73,6 @@
            </property>
           </widget>
          </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="label">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text">
-            <string>Page Columns</string>
-           </property>
-          </widget>
-         </item>
          <item row="2" column="1">
           <widget class="QSpinBox" name="kcfg_rows">
            <property name="sizePolicy">
@@ -105,7 +92,7 @@
          <item row="2" column="0">
           <widget class="QLabel" name="label_4">
            <property name="text">
-            <string>Page Rows</string>
+            <string>Rows</string>
            </property>
           </widget>
          </item>
@@ -181,17 +168,20 @@
            </property>
           </widget>
          </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>Columns</string>
+           </property>
+          </widget>
+         </item>
         </layout>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="kcfg_showPagesUI">
-         <property name="text">
-          <string>Show pages UI (page indicator and buttons)</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-        </widget>
        </item>
        <item>
         <widget class="QCheckBox" name="kcfg_showHeader">
@@ -203,6 +193,16 @@
          </property>
          <property name="text">
           <string>Show header</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="kcfg_showActiveWindowLabel">
+         <property name="text">
+          <string>Show active window label on header</string>
          </property>
          <property name="checked">
           <bool>true</bool>
@@ -222,16 +222,6 @@
          </property>
          <property name="checkable">
           <bool>true</bool>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="kcfg_enableAnimations">
-         <property name="text">
-          <string>Enable animations</string>
          </property>
          <property name="checked">
           <bool>true</bool>

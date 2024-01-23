@@ -4,22 +4,22 @@ Item {
     property string name: "Three Vertical Split"
     property var windows: [
         {
-            x: 0,
-            y: 0,
-            width: 4,
-            height: 12
+            row: 0,
+            rowSpan: 4,
+            column: 0,
+            columnSpan: 12
         },
         {
-            x: 4,
-            y: 0,
-            width: 4,
-            height: 12
+            row: 0,
+            rowSpan: 4,
+            column: 4,
+            columnSpan: 12
         },
         {
-            x: 8,
-            y: 0,
-            width: 4,
-            height: 12
+            row: 0,
+            rowSpan: 4,
+            column: 8,
+            columnSpan: 12
         }
     ]
 }

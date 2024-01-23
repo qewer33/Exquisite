@@ -7,7 +7,7 @@ A KWin script that allows you to tile windows in pre-defined places using a grap
 
 ![](https://img.shields.io/static/v1?style=for-the-badge&label=KWin&message=Script&color=blue&logo=kde)
 ![](https://img.shields.io/badge/Wayland-Ready-blue?style=for-the-badge&logo=linux)
-![](https://img.shields.io/static/v1?style=for-the-badge&label=KDE%20Store&message=7.5K+%20Downloads&color=blue&logo=kde&logoColor=orange)
+![](https://img.shields.io/static/v1?style=for-the-badge&label=KDE%20Store&message=10K+%20Downloads&color=blue&logo=kde&logoColor=orange)
 ![](https://img.shields.io/static/v1?style=for-the-badge&label=Qt&message=QML&color=green&logo=qt)
 
 If you like this KWin script and want to support me, consider getting me a coffe! :D
