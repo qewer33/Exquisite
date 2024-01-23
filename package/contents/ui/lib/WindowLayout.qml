@@ -36,6 +36,8 @@ PlasmaComponents.Button {
     }
 
     onClicked: {
+        textField.forceActiveFocus();
+
         if (tileAvailableWindowsOnBackgroundClick) {
             let clientList = [];
             for (let i = 0; i < workspace.clientList().length; i++) {
@@ -71,7 +73,9 @@ PlasmaComponents.Button {
                 Layout.columnSpan: windows[index].columnSpan
 
                 onClicked: {
-                    tileWindow(workspace.activeClient, windows[index].row, windows[index].rowSpan, windows[index].column, windows[index].columnSpan);
+                    focusField.forceActiveFocus();
+
+                    tileWindow(activeClient, windows[index].row, windows[index].rowSpan, windows[index].column, windows[index].columnSpan);
 
                     if (!clickedWindows.includes(windows[index])) clickedWindows.push(windows[index]);
 

@@ -13,6 +13,8 @@ PlasmaCore.Dialog {
     flags: Qt.X11BypassWindowManagerHint | Qt.FramelessWindowHint
     visible: false
 
+    property var activeClient
+
     property int columns: 5
     property int position: 1
     property double tileScale: 1.3
@@ -46,8 +48,14 @@ PlasmaCore.Dialog {
     }
 
     function show() {
-        var screen = workspace.clientArea(KWin.FullScreenArea, workspace.activeScreen, workspace.currentDesktop);
+        activeClient = workspace.activeClient;
+
+        mainDialog.lower();
+        mainDialog.raise();
+        mainDialog.requestActivate();
+
         mainDialog.visible = true;
+        var screen = workspace.clientArea(KWin.FullScreenArea, workspace.activeScreen, workspace.currentDesktop);
         switch (position) {
             case 0:
                 mainDialog.x = screen.x + screen.width/2 - mainDialog.width/2;
@@ -77,6 +85,7 @@ PlasmaCore.Dialog {
                     mainDialog.y = workspace.cursorPos.y - mainDialog.height/2;
                 break;
         }
+        focusField.forceActiveFocus();
     }
 
     function hide() {
@@ -116,13 +125,13 @@ PlasmaCore.Dialog {
 
                 PlasmaCore.IconItem {
                     anchors.fill: parent
-                    source: workspace.activeClient.icon
+                    source: activeClient.icon
                 }
             }
 
             PlasmaComponents.Label {
                 visible: activeWindowLabelVisible
-                text: workspace.activeClient.caption
+                text: activeClient.caption
             }
 
             Item { Layout.fillWidth: true }
@@ -136,10 +145,26 @@ PlasmaCore.Dialog {
                 }
             }
 
+            PlasmaComponents.TextField {
+                id: focusField
+                visible: false
+
+                onActiveFocusChanged: {
+                    mainDialog.raise();
+                    mainDialog.requestActivate();
+                    closeButton.forceActiveFocus();
+                }
+            }
+
             PlasmaComponents.Button {
+                id: closeButton
                 icon.name: "dialog-close"
                 onClicked: {
-                    mainDialog.visible = false;
+                    mainDialog.hide();
+                }
+
+                Keys.onEscapePressed: {
+                    mainDialog.hide()
                 }
             }
         }
@@ -176,6 +201,8 @@ PlasmaCore.Dialog {
                 if (!client) return;
                 if (hideOnDesktopClick && workspace.activeClient.desktopWindow)
                     mainDialog.visible = false;
+
+                activeClient = workspace.activeClient;
             }
         }
 
