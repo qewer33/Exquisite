@@ -30,6 +30,7 @@ PlasmaCore.Dialog {
     property bool hideTiledWindowTitlebar: false
 
     property var oldWindowGemoetries: new Map()
+    property var tileShortcuts: new Map()
 
     function loadConfig(){
         columns = KWin.readConfig("columns", 5);
@@ -48,13 +49,16 @@ PlasmaCore.Dialog {
     }
 
     function show() {
+        focusTimer.running = true;
+
         activeClient = workspace.activeClient;
 
-        mainDialog.lower();
+        mainDialog.visible = true;
+
         mainDialog.raise();
         mainDialog.requestActivate();
+        focusField.forceActiveFocus();
 
-        mainDialog.visible = true;
         var screen = workspace.clientArea(KWin.FullScreenArea, workspace.activeScreen, workspace.currentDesktop);
         switch (position) {
             case 0:
@@ -85,10 +89,10 @@ PlasmaCore.Dialog {
                     mainDialog.y = workspace.cursorPos.y - mainDialog.height/2;
                 break;
         }
-        focusField.forceActiveFocus();
     }
 
     function hide() {
+        focusTimer.running = false;
         mainDialog.visible = false;
     }
 
@@ -145,26 +149,12 @@ PlasmaCore.Dialog {
                 }
             }
 
-            PlasmaComponents.TextField {
-                id: focusField
-                visible: false
-
-                onActiveFocusChanged: {
-                    mainDialog.raise();
-                    mainDialog.requestActivate();
-                    closeButton.forceActiveFocus();
-                }
-            }
-
             PlasmaComponents.Button {
                 id: closeButton
                 icon.name: "dialog-close"
+                flat: true
                 onClicked: {
                     mainDialog.hide();
-                }
-
-                Keys.onEscapePressed: {
-                    mainDialog.hide()
                 }
             }
         }
@@ -176,12 +166,19 @@ PlasmaCore.Dialog {
             columns: mainDialog.columns
 
             Repeater {
+                id: layoutsRepeater
                 model: FolderListModel {
                     id: folderModel
-
                     folder: Qt.resolvedUrl("../") + "layouts/"
-
                     nameFilters: ["*.qml"]
+                }
+
+                function childHasFocus() {
+                    for (let i = 0; i < layoutsRepeater.count; i++) {
+                        let item = layoutsRepeater.itemAt(i);
+                        if (item.childHasFocus()) return true;
+                    }
+                    return false;
                 }
 
                 WindowLayout {
@@ -192,6 +189,26 @@ PlasmaCore.Dialog {
 
                     windows: layoutFile.item.windows
                 }
+            }
+        }
+
+        // This item is a "hack" to handle focus related actions
+        PlasmaComponents.TextField {
+            id: focusField
+            visible: false
+
+            onActiveFocusChanged: {
+                mainDialog.raise();
+                mainDialog.requestActivate();
+            }
+
+            Keys.onEscapePressed: {
+                mainDialog.hide()
+            }
+            Keys.onPressed: {
+                tileShortcuts.forEach((value, key) => {
+                    if (event.text.toUpperCase() == key.toUpperCase()) value();
+                });
             }
         }
 
@@ -227,6 +244,21 @@ PlasmaCore.Dialog {
                 }
 
                 if (hideTiledWindowTitlebar) workspace.activeClient.noBorder = false;
+            }
+        }
+
+        Timer {
+            id: focusTimer
+            interval: 100
+            repeat: true
+            running: true
+
+            onTriggered: {
+                if (!focusField.focused && !closeButton.hovered && !layoutsRepeater.childHasFocus()) {
+                    mainDialog.raise();
+                    mainDialog.requestActivate();
+                    focusField.forceActiveFocus();
+                }
             }
         }
     }

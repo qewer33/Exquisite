@@ -35,7 +35,17 @@ PlasmaComponents.Button {
         if (hideTiledWindowTitlebar) window.noBorder = true;
     }
 
+    function childHasFocus() {
+        for (let i = 0; i < repeater.count; i++) {
+            let item = repeater.itemAt(i);
+            if (item.focus) return true;
+        }
+        return false;
+    }
+
     onClicked: {
+        mainDialog.raise();
+        mainDialog.requestActivate();
         textField.forceActiveFocus();
 
         if (tileAvailableWindowsOnBackgroundClick) {
@@ -64,15 +74,19 @@ PlasmaComponents.Button {
         columns: 12
 
         Repeater {
+            id: repeater
             model: windows.length
 
             PlasmaComponents.Button {
+                text: windows[index].shortcut ? windows[index].shortcut : ""
                 Layout.row: windows[index].row
                 Layout.rowSpan: windows[index].rowSpan
                 Layout.column: windows[index].column
                 Layout.columnSpan: windows[index].columnSpan
 
                 onClicked: {
+                    mainDialog.raise();
+                    mainDialog.requestActivate();
                     focusField.forceActiveFocus();
 
                     tileWindow(activeClient, windows[index].row, windows[index].rowSpan, windows[index].column, windows[index].columnSpan);
@@ -83,6 +97,14 @@ PlasmaComponents.Button {
                     if (hideOnLayoutTiled && clickedWindows.length === windows.length) {
                         clickedWindows = [];
                         mainDialog.visible = false;
+                    }
+                }
+
+                Component.onCompleted: {
+                    if (windows[index].shortcut) {
+                        tileShortcuts.set(windows[index].shortcut, () => {
+                            tileWindow(activeClient, windows[index].row, windows[index].rowSpan, windows[index].column, windows[index].columnSpan);
+                        });
                     }
                 }
             }

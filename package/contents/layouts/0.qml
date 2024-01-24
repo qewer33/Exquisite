@@ -7,13 +7,15 @@ Item {
             row: 0,
             rowSpan: 6,
             column: 0,
-            columnSpan: 12
+            columnSpan: 12,
+            shortcut: "a"
         },
         {
             row: 0,
             rowSpan: 6,
             column: 6,
-            columnSpan: 12
+            columnSpan: 12,
+            shortcut: "s"
         }
     ]
 }
