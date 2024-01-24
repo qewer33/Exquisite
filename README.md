@@ -36,7 +36,6 @@ There is also a widget companion available if you want to toggle Exquisite visua
 
 ![screenshot_widget](https://github.com/qewer33/Exquisite/blob/main/assets/screenshot_widget.png?raw=true)
 
-
 ## Configuration
 
 Exquisite can be configured from `System Settings > Window Management > KWin Scripts`. Current configuration options include:
@@ -49,34 +48,6 @@ Exquisite can be configured from `System Settings > Window Management > KWin Scr
 - Whether to maximize the window or not when the background button on a layout is clicked, the default behaviour might annoy some people
 
 Keep in mind, KWin needs to be restarted for the settings to apply.
-
-## Troubleshooting
-
-### Doesn't Work on Older Plasma/Distribution Versions
-
-If you don't have an up to date system (e.g older Debian or Ubuntu versions), Exquisite [may not work out of the box](https://github.com/qewer33/Exquisite/issues/10). In order to resolve this, you need to make the following changes:
-
-- In the file `~/.local/share/kwin/scripts/exquisite/contents/ui/main.qml`, find the following line (depends on the current version of Exquisite but should be around line 90):
-```qml
-source: fileUrl
-```
-and change it to:
-```qml
-source: fileURL
-```
-
-- In the file `~/.local/share/kwin/scripts/exquisite/contents/ui/lib/WindowLayout.qml`, find the following lines (they should be around line 13):
-```qml
-implicitWidth: 160*1.2 * PlasmaCore.Units.devicePixelRatio
-implicitHeight: 90*1.2 * PlasmaCore.Units.devicePixelRatio
-```
-and change them to:
-```qml
-implicitWidth: 120
-implicitHeight: 70
-```
-
-If you have further troubles, [please open an issue](https://github.com/qewer33/Exquisite/issues/new).
 
 ## Modifying and Creating Layouts
 
@@ -129,4 +100,31 @@ The window in this image would be:
     columnSpan: 9
 }
 ```
+## Troubleshooting
+
+### Doesn't Work on Older Plasma/Distribution Versions
+
+If you don't have an up to date system (e.g older Debian or Ubuntu versions), Exquisite [may not work out of the box](https://github.com/qewer33/Exquisite/issues/10). In order to resolve this, you need to make the following changes:
+
+- In the file `~/.local/share/kwin/scripts/exquisite/contents/ui/main.qml`, find the following line (depends on the current version of Exquisite but should be around line 90):
+```qml
+source: fileUrl
+```
+and change it to:
+```qml
+source: fileURL
+```
+
+- In the file `~/.local/share/kwin/scripts/exquisite/contents/ui/lib/WindowLayout.qml`, find the following lines (they should be around line 13):
+```qml
+implicitWidth: 160*1.2 * PlasmaCore.Units.devicePixelRatio
+implicitHeight: 90*1.2 * PlasmaCore.Units.devicePixelRatio
+```
+and change them to:
+```qml
+implicitWidth: 120
+implicitHeight: 70
+```
+
+If you have further troubles, [please open an issue](https://github.com/qewer33/Exquisite/issues/new).
 
