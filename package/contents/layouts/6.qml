@@ -1,34 +1,34 @@
 import QtQuick 2.5
 
 Item {
-    property string name: "Four Tiled"
+    property string name: "Four Tile Grid"
     property var windows: [
         {
-            row: 0,
-            rowSpan: 6,
-            column: 0,
-            columnSpan: 6,
+            x: 0,
+            y: 0,
+            width: 6,
+            height: 6,
             shortcutKey: Qt.Key_1
         },
         {
-            row: 0,
-            rowSpan: 6,
-            column: 6,
-            columnSpan: 6,
+            x: 0,
+            y: 6,
+            width: 6,
+            height: 6,
             shortcutKey: Qt.Key_2
         },
         {
-            row: 6,
-            rowSpan: 6,
-            column: 0,
-            columnSpan: 6,
+            x: 6,
+            y: 0,
+            width: 6,
+            height: 6,
             shortcutKey: Qt.Key_3
         },
         {
-            row: 6,
-            rowSpan: 6,
-            column: 6,
-            columnSpan: 6,
+            x: 6,
+            y: 6,
+            width: 6,
+            height: 6,
             shortcutKey: Qt.Key_4
         }
     ]

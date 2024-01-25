@@ -4,22 +4,25 @@ Item {
     property string name: "1:2:1 Triple Split"
     property var windows: [
         {
-            row: 0,
-            rowSpan: 3,
-            column: 0,
-            columnSpan: 12
+            x: 0,
+            y: 0,
+            width: 3,
+            height: 12,
+            shortcutKey: Qt.Key_A
         },
         {
-            row: 0,
-            rowSpan: 6,
-            column: 3,
-            columnSpan: 12
+            x: 3,
+            y: 0,
+            width: 6,
+            height: 12,
+            shortcutKey: Qt.Key_S
         },
         {
-            row: 0,
-            rowSpan: 3,
-            column: 9,
-            columnSpan: 12
+            x: 9,
+            y: 0,
+            width: 3,
+            height: 12,
+            shortcutKey: Qt.Key_D
         }
     ]
 }

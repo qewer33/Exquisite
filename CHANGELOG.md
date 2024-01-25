@@ -1,30 +1,34 @@
-# 1.0 Indev
+# 0.5 Release
 
 ### Features
-- Custom layout creator!
-    - You can now create, save and edit custom Exquisite layouts with a GUI
-    - "Edit Mode" let's you manage your custom layouts
-    - This feature hasn't been tested extensively, please report any bugs or issues you might have
-- Multiple pages
-    - This allows you to create as many layouts as you want and still be able to access them without the Exquisite window becoming larger
-    - If you don't like this change, you can disable it by unchecking the "Show pages UI" option in Exquisite settings
-- Exquisite now appears under the mouse cursor by default when activated
-    - This option is still configurable (Top, Center, Bottom and Under Mouse Cursor)
-- Completely revamped the settings dialog
-    - Now with tabs!
+
+- Pressing the ESC key now hides Exquisite
+- You can now assign shortcut to individual tiles in a layout. Shortcuts only work when Exquisite is open.
+    - You can edit the layouts in: ~/.local/share/kwin/scripts/exquisite/layouts
+- Exquisite now has an option to show the currently active window's title in the header bar, enabled by default
+- New "Under Mouse Cursor" option added to Exquisite spawn location options
+    - This option only works with Plasma releases above 5.27.5
 - New "Hide titlebars of tiled windows" option, disabled by default
-- New "Tile Scale" option to adjust the size of Exquisite's window tiles, 1.3 by default
-- 8 more default layouts added. Exquisite now has 16 layouts by default
-    - Default layouts can be edited or deleted in: ~/.local/share/kwin/scripts/exquisite/layouts
+- New "Tile scale" option to adjust the size of Exquisite's window tiles, 1.3 by default
+- New "Gap between tiles" option to adjust the gap between tiled windows and screen edges, 0 by default
+- Completely revamped settings dialog
+    - Now with tabs!
 
 ### Changed
+
 - "Restart KWin" button is now disabled by default
 - Removed titlebar "Help" button
+- **!!! IMPORTANT !!!**: Layouts are now defined by (`x`, `y`, `width`, `height`) instead of (`row`, `rowSpan`, `column`, `columnSpan`). You will need to port your custom layouts, read below for a quick porting guide:
+    - `row` -> `y`
+    - `rowSpan` -> `width`
+    - `column` -> `x`
+    - `columnSpan` -> `height`
 
 ### Bug Fixes
 
 - Autotiling now only tiles windows on the current screen and current activity
 - Fix bug where on certain screen sizes and layouts, windows didn't tile properly and caused windows to visually bug
+
 
 # 0.4 Release
 

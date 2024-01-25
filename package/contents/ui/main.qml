@@ -25,6 +25,7 @@ PlasmaCore.Dialog {
     property bool hideOnDesktopClick: true
     property bool hideOnFirstTile: false
     property bool hideOnLayoutTiled: false
+    property int tileGap: 0
     property bool rememberWindowGeometries: true
     property bool tileAvailableWindowsOnBackgroundClick: true
     property bool hideTiledWindowTitlebar: false
@@ -43,6 +44,7 @@ PlasmaCore.Dialog {
         hideOnDesktopClick = KWin.readConfig("hideOnDesktopClick", true);
         hideOnFirstTile = KWin.readConfig("hideOnFirstTile", false);
         hideOnLayoutTiled = KWin.readConfig("hideOnLayoutTiled", false);
+        tileGap = KWin.readConfig("tileGap", 0);
         rememberWindowGeometries = KWin.readConfig("rememberWindowGeometries", true);
         tileAvailableWindowsOnBackgroundClick = KWin.readConfig("tileAvailableWindowsOnBackgroundClick", true);
         hideTiledWindowTitlebar = KWin.readConfig("hideTiledWindowTitlebar", false);

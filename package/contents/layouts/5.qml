@@ -4,23 +4,22 @@ Item {
     property string name: "Two Up One Down"
     property var windows: [
         {
-            row: 0,
-            rowSpan: 6,
-            column: 0,
-            columnSpan: 6
+            x: 0,
+            y: 6,
+            width: 12,
+            height: 6
         },
         {
-            row: 0,
-            rowSpan: 6,
-            column: 6,
-            columnSpan: 6
+            x: 0,
+            y: 0,
+            width: 6,
+            height: 6
         },
         {
-            row: 6,
-            rowSpan: 12,
-            column: 0,
-            columnSpan: 6
+            x: 6,
+            y: 0,
+            width: 6,
+            height: 6
         }
     ]
 }
-

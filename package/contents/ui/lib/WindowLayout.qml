@@ -16,7 +16,7 @@ PlasmaComponents.Button {
     property var windows
     property var clickedWindows: []
 
-    function tileWindow(window, row, rowSpan, column, columnSpan) {
+    function tileWindow(window, x, y, width, height) {
         if (!window.normalWindow) return;
         if (rememberWindowGeometries && !oldWindowGemoetries.has(window)) oldWindowGemoetries.set(window, [window.geometry.width, window.geometry.height]);
 
@@ -25,10 +25,10 @@ PlasmaComponents.Button {
         let xMult = screen.width / 12.0;
         let yMult = screen.height / 12.0;
 
-        let newX = Math.round(column * xMult);
-        let newY = Math.round(row * yMult);
-        let newWidth = Math.round(rowSpan * xMult);
-        let newHeight = Math.round(columnSpan * yMult);
+        let newX = Math.round(x * xMult) + tileGap;
+        let newY = Math.round(y * yMult) + tileGap;
+        let newWidth = Math.round(width * xMult) - 2*tileGap;
+        let newHeight = Math.round(height * yMult) - 2*tileGap;
 
         window.setMaximize(false, false);
         window.geometry = Qt.rect(screen.x + newX, screen.y + newY, newWidth, newHeight);
@@ -36,6 +36,7 @@ PlasmaComponents.Button {
     }
 
     function childHasFocus() {
+        if (root.focus) return true;
         for (let i = 0; i < repeater.count; i++) {
             let item = repeater.itemAt(i);
             if (item.focus) return true;
@@ -46,7 +47,7 @@ PlasmaComponents.Button {
     onClicked: {
         mainDialog.raise();
         mainDialog.requestActivate();
-        textField.forceActiveFocus();
+        focusField.forceActiveFocus();
 
         if (tileAvailableWindowsOnBackgroundClick) {
             let clientList = [];
@@ -59,7 +60,7 @@ PlasmaComponents.Button {
             for (let i = 0; i < clientList.length; i++) {
                 if (i >= windows.length || i >= clientList.length) return;
                 let client = clientList[i];
-                tileWindow(client, windows[i].row, windows[i].rowSpan, windows[i].column, windows[i].columnSpan);
+                tileWindow(client, windows[i].x, windows[i].y, windows[i].width, windows[i].height);
                 workspace.activeClient = client;
             }
 
@@ -95,17 +96,17 @@ PlasmaComponents.Button {
                         return out;
                     } else return "";
                 }
-                Layout.row: windows[index].row || windows[index].y
-                Layout.rowSpan: windows[index].rowSpan || windows[index].width
-                Layout.column: windows[index].column || windows[index].x
-                Layout.columnSpan: windows[index].columnSpan || windows[index].height
+                Layout.row: windows[index].y
+                Layout.rowSpan: windows[index].width
+                Layout.column: windows[index].x
+                Layout.columnSpan: windows[index].height
 
                 onClicked: {
                     mainDialog.raise();
                     mainDialog.requestActivate();
                     focusField.forceActiveFocus();
 
-                    tileWindow(activeClient, windows[index].row, windows[index].rowSpan, windows[index].column, windows[index].columnSpan);
+                    tileWindow(activeClient, windows[index].x, windows[index].y, windows[index].width, windows[index].height);
 
                     if (!clickedWindows.includes(windows[index])) clickedWindows.push(windows[index]);
 
@@ -123,7 +124,7 @@ PlasmaComponents.Button {
                     if (window.shortcutKey) {
                         let key = [window.shortcutModifier, window.shortcutKey];
                         tileShortcuts.set(key, () => {
-                            tileWindow(activeClient, window.row, window.rowSpan, window.column, window.columnSpan);
+                            tileWindow(activeClient, window.x, window.y, window.width, window.height);
                         });
                     }
                 }
