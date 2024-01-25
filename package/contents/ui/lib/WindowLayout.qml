@@ -78,11 +78,27 @@ PlasmaComponents.Button {
             model: windows.length
 
             PlasmaComponents.Button {
-                text: windows[index].shortcut ? windows[index].shortcut : ""
-                Layout.row: windows[index].row
-                Layout.rowSpan: windows[index].rowSpan
-                Layout.column: windows[index].column
-                Layout.columnSpan: windows[index].columnSpan
+                text: {
+                    let window = windows[index];
+                    if (window.shortcutKey) {
+                        let out = ""
+                        if (window.shortcutModifier) {
+                            let modifiers = {
+                                [Qt.ControlModifier]: "Ctrl",
+                                [Qt.ShiftModifier]: "Shift",
+                                [Qt.AltModifier]: "Alt",
+                                [Qt.MetaModifier]: "Meta",
+                            }
+                            out += modifiers[window.shortcutModifier] + "+"
+                        }
+                        out += String.fromCharCode(window.shortcutKey);
+                        return out;
+                    } else return "";
+                }
+                Layout.row: windows[index].row || windows[index].y
+                Layout.rowSpan: windows[index].rowSpan || windows[index].width
+                Layout.column: windows[index].column || windows[index].x
+                Layout.columnSpan: windows[index].columnSpan || windows[index].height
 
                 onClicked: {
                     mainDialog.raise();
@@ -101,9 +117,13 @@ PlasmaComponents.Button {
                 }
 
                 Component.onCompleted: {
-                    if (windows[index].shortcut) {
-                        tileShortcuts.set(windows[index].shortcut, () => {
-                            tileWindow(activeClient, windows[index].row, windows[index].rowSpan, windows[index].column, windows[index].columnSpan);
+                    let window = windows[index];
+
+                    // Register shortcuts
+                    if (window.shortcutKey) {
+                        let key = [window.shortcutModifier, window.shortcutKey];
+                        tileShortcuts.set(key, () => {
+                            tileWindow(activeClient, window.row, window.rowSpan, window.column, window.columnSpan);
                         });
                     }
                 }

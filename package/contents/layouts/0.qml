@@ -8,14 +8,16 @@ Item {
             rowSpan: 6,
             column: 0,
             columnSpan: 12,
-            shortcut: "a"
+            shortcutModifier: Qt.ControlModifier,
+            shortcutKey: Qt.Key_A
         },
         {
             row: 0,
             rowSpan: 6,
             column: 6,
             columnSpan: 12,
-            shortcut: "s"
+            shortcutModifier: Qt.AltModifier,
+            shortcutKey: Qt.Key_S
         }
     ]
 }

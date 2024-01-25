@@ -129,13 +129,13 @@ PlasmaCore.Dialog {
 
                 PlasmaCore.IconItem {
                     anchors.fill: parent
-                    source: activeClient.icon
+                    source: activeClient ? activeClient.icon : ""
                 }
             }
 
             PlasmaComponents.Label {
                 visible: activeWindowLabelVisible
-                text: activeClient.caption
+                text: activeClient ? activeClient.caption : ""
             }
 
             Item { Layout.fillWidth: true }
@@ -202,12 +202,12 @@ PlasmaCore.Dialog {
                 mainDialog.requestActivate();
             }
 
-            Keys.onEscapePressed: {
-                mainDialog.hide()
-            }
+            Keys.onEscapePressed: mainDialog.hide()
             Keys.onPressed: {
-                tileShortcuts.forEach((value, key) => {
-                    if (event.text.toUpperCase() == key.toUpperCase()) value();
+                tileShortcuts.forEach((tileFunction, key) => {
+                    let shortcutModifier = key[0] ? key[0] : Qt.NoModifier;
+                    let shortcutKey = key[1];
+                    if (event.key === shortcutKey && event.modifiers === shortcutModifier) tileFunction();
                 });
             }
         }
