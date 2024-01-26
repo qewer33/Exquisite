@@ -38,14 +38,9 @@ There is also a widget companion available if you want to toggle Exquisite visua
 
 ## Configuration
 
-Exquisite can be configured from `System Settings > Window Management > KWin Scripts`. Current configuration options include:
+Exquisite can be configured from `System Settings > Window Management > KWin Scripts`.
 
-- Column count for the main window
-- Main window position (Top, Center or Bottom)
-- Main window header visibility
-- Whether to hide when a window is tiled
-- Whether to hide when a layout is tiled (all windows in the layout has been clicked)
-- Whether to maximize the window or not when the background button on a layout is clicked, the default behaviour might annoy some people
+![screenshot_widget](https://github.com/qewer33/Exquisite/blob/main/assets/screenshot_preferences.png?raw=true)
 
 Keep in mind, KWin needs to be restarted for the settings to apply.
 
@@ -60,16 +55,20 @@ Item {
     property string name: "Two Vertical Split"
     property var windows: [
         {
-            row: 0,
-            rowSpan: 6,
-            column: 0,
-            columnSpan: 12
+            x: 0,
+            y: 0,
+            width: 6,
+            height: 12,
+            shortcutModifier: Qt.ControlModifier,
+            shortcutKey: Qt.Key_A
         },
         {
-            row: 0,
-            rowSpan: 6,
-            column: 6,
-            columnSpan: 12
+            x: 6,
+            y: 0,
+            width: 6,
+            height: 12,
+            shortcutModifier: Qt.ControlModifier,
+            shortcutKey: Qt.Key_S
         }
     ]
 }
@@ -77,14 +76,16 @@ Item {
 
 The import statement and Item declaration are boilerplate, what we really need to understand are the two properties: `name` and `windows`. `name` is pretty self-explanatory, it's the name of the layout. The names aren't currently used but they might be in the future, better to write something explanatory rather than not.
 
-The `windows` parameter is an array of JS objects. Each object represents a window and has 4 entries: `row`, `rowSpan`, `column` and `columnSpan`. These entries describe how the window is laid out in the layout, let's take a look at each one in detail:
+The `windows` parameter is an array of JS objects. Each object represents a window and has 4 required (`x`, `y`, `width`, `height`) and 2 optional (`shortcutModifier`, `shortcutKey`) entries. These entries describe how the window is laid out in the layout and it's shortcut properties, let's take a look at each one in detail:
 
-- `row`: The row that the top left corner of the window will be placed at. Rows start from the left side of a grid so you can think of this parameter as like the `y` position of the window.
-- `rowSpan`: The amount of grid cells that the window is going to span inside a row. This includes the origin cell which is `row`. You can think of this as like the `width` of the window.
-- `column`: The column that the top left corner of the window will be placed at. Columns start from the upper side of the grid so you can think of this as like the `x` position of the window.
-- `columnSpan`: The amount of grid cells that the window is going to span inside a column. This includes the origin cell which is `column`. You can think of this as like the `height` of the window.
+- `x`: The `»` position of the window. `»` is the horizontal axis that goes from left to right.
+- `y`: The `y` position of the window. `y` is the vertical axis that goes from top to bottom.
+- `width`: The width (length along the x-axis) of the window.
+- `height`: The height (length along the y-axis) of the window.
+- `shortcutKey`: Optional parameter that defines the shortcut key of the window. Pressing the defined key (along with the `shortcutModifier` if it's also defined) while Exquisite is active will tile the window to the layout window of the shortcut. Can be any key defined in the `Qt` namespace (letters: `Qt.Key_A`...`Qt.Key_Z`, numbers: `Qt.Key_0`...`Qt.Key_9`). For further information, [look at the Qt documentation](https://doc.qt.io/qt-5/qt.html#Key-enum).
+- `shortcutModifier`: Optional parameter that defines the modifier that needs to be pressed in order for `shortcutKey` to work. Can be one of the following: `Qt.ControlModifier`, `Qt.ShiftModifier`, `Qt.AltModifier`, `Qt.MetaModifier`. If you want to assign a single key without a modifier as a shortcut to a window, leave this parameter empty.
 
-The grid that the layout windows are placed in is 12x12 (choose 12 since it's a relatively small number and can be divided by 2, 3 and 4). For `row` and `column`, the minimum value is 0 and the maximum 11. For `rowSpan` and `columnSpan`, the minimum is 1 and the maximum is 12.
+The grid that the layout windows are placed in is 12x12 (I choose 12 since it's a relatively small number and can be divided by 2, 3 and 4). For `x` and `y`, the minimum value is 0 and the maximum is 11. For `width` and `height`, the minimum is 1 and the maximum is 12.
 
 Here is an image for better explanation:
 
@@ -94,10 +95,10 @@ The window in this image would be:
 
 ```qml
 {
-    row: 2,
-    rowSpan: 7,
-    column: 1,
-    columnSpan: 9
+    x: 1,
+    y: 2,
+    width: 7,
+    height: 9
 }
 ```
 ## Troubleshooting
