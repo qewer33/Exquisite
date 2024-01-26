@@ -78,8 +78,8 @@ The import statement and Item declaration are boilerplate, what we really need t
 
 The `windows` parameter is an array of JS objects. Each object represents a window and has 4 required (`x`, `y`, `width`, `height`) and 2 optional (`shortcutModifier`, `shortcutKey`) entries. These entries describe how the window is laid out in the layout and it's shortcut properties, let's take a look at each one in detail:
 
-- `x`: The `»` position of the window. `»` is the horizontal axis that goes from left to right.
-- `y`: The `y` position of the window. `y` is the vertical axis that goes from top to bottom.
+- `x`: The x position of the window. x is the horizontal axis that goes from left to right.
+- `y`: The y position of the window. y is the vertical axis that goes from top to bottom.
 - `width`: The width (length along the x-axis) of the window.
 - `height`: The height (length along the y-axis) of the window.
 - `shortcutKey`: Optional parameter that defines the shortcut key of the window. Pressing the defined key (along with the `shortcutModifier` if it's also defined) while Exquisite is active will tile the window to the layout window of the shortcut. Can be any key defined in the `Qt` namespace (letters: `Qt.Key_A`...`Qt.Key_Z`, numbers: `Qt.Key_0`...`Qt.Key_9`). For further information, [look at the Qt documentation](https://doc.qt.io/qt-5/qt.html#Key-enum).
