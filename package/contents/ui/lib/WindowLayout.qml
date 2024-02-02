@@ -16,23 +16,23 @@ PlasmaComponents.Button {
     property var windows
     property var clickedWindows: []
 
-    function tileWindow(window, x, y, width, height) {
-        if (!window.normalWindow) return;
-        if (rememberWindowGeometries && !oldWindowGemoetries.has(window)) oldWindowGemoetries.set(window, [window.geometry.width, window.geometry.height]);
+    function tileWindow(client, window) {
+        if (!client.normalWindow) return;
+        if (rememberWindowGeometries && !oldWindowGemoetries.has(client)) oldWindowGemoetries.set(client, [client.geometry.width, client.geometry.height]);
 
-        let screen = workspace.clientArea(KWin.MaximizeArea, workspace.activeScreen, window.desktop);
+        let screen = workspace.clientArea(KWin.MaximizeArea, workspace.activeScreen, client.desktop);
 
         let xMult = screen.width / 12.0;
         let yMult = screen.height / 12.0;
 
-        let newX = Math.round(x * xMult) + tileGap;
-        let newY = Math.round(y * yMult) + tileGap;
-        let newWidth = Math.round(width * xMult) - 2*tileGap;
-        let newHeight = Math.round(height * yMult) - 2*tileGap;
+        let newX = Math.round(window.x * xMult) + tileGap;
+        let newY = Math.round(window.y * yMult) + tileGap;
+        let newWidth = Math.round(window.width * xMult) - 2*tileGap;
+        let newHeight = Math.round(window.height * yMult) - 2*tileGap;
 
-        window.setMaximize(false, false);
-        window.geometry = Qt.rect(screen.x + newX, screen.y + newY, newWidth, newHeight);
-        if (hideTiledWindowTitlebar) window.noBorder = true;
+        client.setMaximize(false, false);
+        client.geometry = Qt.rect(screen.x + newX, screen.y + newY, newWidth, newHeight);
+        if (hideTiledWindowTitlebar) client.noBorder = true;
     }
 
     function childHasFocus() {
@@ -60,7 +60,7 @@ PlasmaComponents.Button {
             for (let i = 0; i < clientList.length; i++) {
                 if (i >= windows.length || i >= clientList.length) return;
                 let client = clientList[i];
-                tileWindow(client, windows[i].x, windows[i].y, windows[i].width, windows[i].height);
+                tileWindow(client, windows[i]);
                 workspace.activeClient = client;
             }
 
@@ -106,7 +106,7 @@ PlasmaComponents.Button {
                     mainDialog.requestActivate();
                     focusField.forceActiveFocus();
 
-                    tileWindow(activeClient, windows[index].x, windows[index].y, windows[index].width, windows[index].height);
+                    tileWindow(activeClient, windows[index]);
 
                     if (!clickedWindows.includes(windows[index])) clickedWindows.push(windows[index]);
 
@@ -124,7 +124,7 @@ PlasmaComponents.Button {
                     if (window.shortcutKey) {
                         let key = [window.shortcutModifier, window.shortcutKey];
                         tileShortcuts.set(key, () => {
-                            tileWindow(activeClient, window.x, window.y, window.width, window.height);
+                            tileWindow(activeClient, window);
                         });
                     }
                 }
