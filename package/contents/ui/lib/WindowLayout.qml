@@ -24,11 +24,31 @@ PlasmaComponents.Button {
 
         let xMult = screen.width / 12.0;
         let yMult = screen.height / 12.0;
+        let x = 0.0;
+        let y = 0.0;
+        let width = 0.0;
+        let height = 0.0;
 
-        let newX = Math.round(window.x * xMult) + tileGap;
-        let newY = Math.round(window.y * yMult) + tileGap;
-        let newWidth = Math.round(window.width * xMult) - 2*tileGap;
-        let newHeight = Math.round(window.height * yMult) - 2*tileGap;
+        if (window.hasOwnProperty("rawX")) {
+            x = window.rawX;
+        } else {
+            x = Math.round(window.x * xMult) + tileGap;
+        }
+        if (window.hasOwnProperty("rawY")) {
+            y = window.rawY;
+        } else {
+            y = Math.round(window.y * yMult) + tileGap;
+        }
+        if (window.hasOwnProperty("rawWidth")) {
+            width = window.rawWidth;
+        } else {
+            width = Math.round(window.width * xMult) - 2*tileGap;
+        }
+        if (window.hasOwnProperty("rawWidth")) {
+            height = window.rawHeight;
+        } else {
+            height = Math.round(window.height * yMult) - 2*tileGap;
+        }
 
         client.setMaximize(false, false);
         client.geometry = Qt.rect(screen.x + newX, screen.y + newY, newWidth, newHeight);
@@ -96,10 +116,38 @@ PlasmaComponents.Button {
                         return out;
                     } else return "";
                 }
-                Layout.row: windows[index].y
-                Layout.rowSpan: windows[index].width
-                Layout.column: windows[index].x
-                Layout.columnSpan: windows[index].height
+                Layout.column: {
+                    let screen = workspace.clientArea(KWin.MaximizeArea, workspace.activeScreen, workspace.currentDesktop);
+                    if (windows[index].hasOwnProperty("rawX")) {
+                        return = windows[index].rawX / (screen.width / 12.0);
+                    } else {
+                        return = windows[index].x;
+                    }
+                }
+                Layout.row: {
+                    let screen = workspace.clientArea(KWin.MaximizeArea, workspace.activeScreen, workspace.currentDesktop);
+                    if (windows[index].hasOwnProperty("rawY")) {
+                        return windows[index].rawY / (screen.height / 12.0);
+                    } else {
+                        return windows[index].y;
+                    }
+                }
+                Layout.rowSpan: {
+                    let screen = workspace.clientArea(KWin.MaximizeArea, workspace.activeScreen, workspace.currentDesktop);
+                    if (windows[index].hasOwnProperty("rawWidth")) {
+                        return windows[index].rawWidth / (screen.width / 12.0);
+                    } else {
+                        return windows[index].width;
+                    }
+                }
+                Layout.columnSpan: {
+                    let screen = workspace.clientArea(KWin.MaximizeArea, workspace.activeScreen, workspace.currentDesktop);
+                    if (windows[index].hasOwnProperty("rawHeight")) {
+                        return windows[index].rawHeight / (screen.height / 12.0);
+                    } else {
+                        return windows[index].height;
+                    }
+                }
 
                 onClicked: {
                     mainDialog.raise();
