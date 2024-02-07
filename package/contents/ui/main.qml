@@ -210,7 +210,9 @@ PlasmaCore.Dialog {
                 tileShortcuts.forEach((tileFunction, key) => {
                     let shortcutModifier = key[0] ? key[0] : Qt.NoModifier;
                     let shortcutKey = key[1];
-                    if (event.key === shortcutKey && event.modifiers === shortcutModifier) tileFunction();
+                    if (event.key === shortcutKey && event.modifiers === shortcutModifier) {
+                        tileFunction();
+                    }
                 });
             }
         }
