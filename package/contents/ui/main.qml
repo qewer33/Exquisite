@@ -276,6 +276,7 @@ PlasmaCore.Dialog {
                 if (mainDialog.visible) {
                     mainDialog.hide();
                 } else {
+                    mainDialog.hide();
                     mainDialog.loadConfig();
                     mainDialog.show();
                 }
