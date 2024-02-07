@@ -254,7 +254,7 @@ PlasmaCore.Dialog {
             id: focusTimer
             interval: 100
             repeat: true
-            running: true
+            running: false
 
             onTriggered: {
                 if (!focusField.focused && !closeButton.hovered && !layoutsRepeater.childHasFocus()) {
