@@ -96,6 +96,7 @@ PlasmaCore.Dialog {
     function hide() {
         focusTimer.running = false;
         mainDialog.visible = false;
+        mainDialog.tileShortcuts.clear();
     }
 
     ColumnLayout {
