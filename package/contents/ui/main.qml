@@ -110,7 +110,7 @@ PlasmaCore.Dialog {
                 disconnectSource(sourceName);
             }
             function exec() {
-                mainDialog.visible = false;
+                mainDialog.hide();
                 connectSource(`bash ${Qt.resolvedUrl("./").replace(/^(file:\/{2})/,"")}restartKWin.sh`);
             }
         }
@@ -220,7 +220,7 @@ PlasmaCore.Dialog {
             function onClientActivated(client) {
                 if (!client) return;
                 if (hideOnDesktopClick && workspace.activeClient.desktopWindow)
-                    mainDialog.visible = false;
+                    mainDialog.hide();
 
                 activeClient = workspace.activeClient;
             }
