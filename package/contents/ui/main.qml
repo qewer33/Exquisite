@@ -196,6 +196,7 @@ PlasmaCore.Dialog {
 
                     windows: layoutFile.item.windows
                     screen: mainDialog.screen
+                    main: mainDialog
                 }
             }
         }

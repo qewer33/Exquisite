@@ -13,14 +13,14 @@ PlasmaComponents.Button {
     implicitWidth: 160*1.2 * PlasmaCore.Units.devicePixelRatio
     implicitHeight: 90*1.2 * PlasmaCore.Units.devicePixelRatio
 
+    property var main
     property var windows
     property var screen
     property var clickedWindows: []
 
     function tileWindow(client, window) {
         if (!client.normalWindow) return;
-        if (rememberWindowGeometries && !oldWindowGemoetries.has(client)) oldWindowGemoetries.set(client, [client.geometry.width, client.geometry.height]);
-
+        if (root.main.rememberWindowGeometries && !root.main.oldWindowGemoetries.has(client)) root.main.oldWindowGemoetries.set(client, [client.geometry.width, client.geometry.height]);
         let screen = workspace.clientArea(KWin.MaximizeArea, workspace.activeScreen, client.desktop);
 
         let xMult = screen.width / 12.0;
@@ -66,8 +66,8 @@ PlasmaComponents.Button {
     }
 
     onClicked: {
-        mainDialog.raise();
-        mainDialog.requestActivate();
+        main.raise();
+        main.requestActivate();
         focusField.forceActiveFocus();
 
         if (tileAvailableWindowsOnBackgroundClick) {
@@ -85,7 +85,7 @@ PlasmaComponents.Button {
                 workspace.activeClient = client;
             }
 
-            if (hideOnFirstTile || hideOnLayoutTiled) mainDialog.visible = false;
+            if (hideOnFirstTile || hideOnLayoutTiled) main.hide();
         }
     }
 
@@ -155,18 +155,18 @@ PlasmaComponents.Button {
                 }
 
                 onClicked: {
-                    mainDialog.raise();
-                    mainDialog.requestActivate();
+                    main.raise();
+                    main.requestActivate();
                     focusField.forceActiveFocus();
 
                     tileWindow(activeClient, windows[index]);
 
                     if (!clickedWindows.includes(windows[index])) clickedWindows.push(windows[index]);
 
-                    if (hideOnFirstTile) mainDialog.visible = false;
+                    if (hideOnFirstTile) main.hide();
                     if (hideOnLayoutTiled && clickedWindows.length === windows.length) {
                         clickedWindows = [];
-                        mainDialog.visible = false;
+                        main.hide();
                     }
                 }
 
