@@ -14,6 +14,7 @@ PlasmaCore.Dialog {
     visible: false
 
     property var activeClient
+    property var screen
 
     property int columns: 5
     property int position: 1
@@ -51,6 +52,10 @@ PlasmaCore.Dialog {
     }
 
     function show() {
+        // Get the current screen.
+        mainDialog.screen = workspace.clientArea(KWin.MaximizeArea, workspace.activeScreen, workspace.currentDesktop);
+        var screen = mainDialog.screen
+
         focusTimer.running = true;
 
         activeClient = workspace.activeClient;
@@ -61,7 +66,6 @@ PlasmaCore.Dialog {
         mainDialog.requestActivate();
         focusField.forceActiveFocus();
 
-        var screen = workspace.clientArea(KWin.FullScreenArea, workspace.activeScreen, workspace.currentDesktop);
         switch (position) {
             case 0:
                 mainDialog.x = screen.x + screen.width/2 - mainDialog.width/2;
@@ -191,6 +195,7 @@ PlasmaCore.Dialog {
                     }
 
                     windows: layoutFile.item.windows
+                    screen: mainDialog.screen
                 }
             }
         }

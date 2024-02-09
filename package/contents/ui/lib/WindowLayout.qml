@@ -14,6 +14,7 @@ PlasmaComponents.Button {
     implicitHeight: 90*1.2 * PlasmaCore.Units.devicePixelRatio
 
     property var windows
+    property var screen
     property var clickedWindows: []
 
     function tileWindow(client, window) {
@@ -117,33 +118,37 @@ PlasmaComponents.Button {
                     } else return "";
                 }
                 Layout.column: {
-                    let screen = workspace.clientArea(KWin.MaximizeArea, workspace.activeScreen, workspace.currentDesktop);
                     if (windows[index].hasOwnProperty("rawX")) {
-                        return = windows[index].rawX / (screen.width / 12.0);
+                        let val = Math.min(windows[index].rawX / (screen.width / 12.0), 12.0);
+                        val = Math.round(val);
+                        return val;
                     } else {
-                        return = windows[index].x;
+                        return windows[index].x;
                     }
                 }
                 Layout.row: {
-                    let screen = workspace.clientArea(KWin.MaximizeArea, workspace.activeScreen, workspace.currentDesktop);
                     if (windows[index].hasOwnProperty("rawY")) {
-                        return windows[index].rawY / (screen.height / 12.0);
+                        let val = Math.min(windows[index].rawY / (screen.height / 12.0), 12.0);
+                        val = Math.round(val);
+                        return val;
                     } else {
                         return windows[index].y;
                     }
                 }
                 Layout.rowSpan: {
-                    let screen = workspace.clientArea(KWin.MaximizeArea, workspace.activeScreen, workspace.currentDesktop);
                     if (windows[index].hasOwnProperty("rawWidth")) {
-                        return windows[index].rawWidth / (screen.width / 12.0);
+                        let val = Math.min(windows[index].rawWidth / (screen.width / 12.0), 12.0)
+                        val = Math.round(val);
+                        return val;
                     } else {
                         return windows[index].width;
                     }
                 }
                 Layout.columnSpan: {
-                    let screen = workspace.clientArea(KWin.MaximizeArea, workspace.activeScreen, workspace.currentDesktop);
                     if (windows[index].hasOwnProperty("rawHeight")) {
-                        return windows[index].rawHeight / (screen.height / 12.0);
+                        let val = Math.min(windows[index].rawHeight / (screen.height / 12.0), 12.0);
+                        val = Math.round(val);
+                        return val;
                     } else {
                         return windows[index].height;
                     }
