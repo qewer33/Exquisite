@@ -18,10 +18,11 @@ PlasmaComponents.Button {
     property var screen
     property var clickedWindows: []
 
-    function tileWindow(client, window) {
+    function tileWindow(client, window, root) {
+        var screen = root.screen;
+        if (screen == undefined) { console.log("screen"); return; }
         if (!client.normalWindow) return;
         if (root.main.rememberWindowGeometries && !root.main.oldWindowGemoetries.has(client)) root.main.oldWindowGemoetries.set(client, [client.geometry.width, client.geometry.height]);
-        let screen = workspace.clientArea(KWin.MaximizeArea, workspace.activeScreen, client.desktop);
 
         let xMult = screen.width / 12.0;
         let yMult = screen.height / 12.0;
@@ -81,7 +82,7 @@ PlasmaComponents.Button {
             for (let i = 0; i < clientList.length; i++) {
                 if (i >= windows.length || i >= clientList.length) return;
                 let client = clientList[i];
-                tileWindow(client, windows[i]);
+                tileWindow(client, windows[i], root);
                 workspace.activeClient = client;
             }
 
@@ -159,7 +160,7 @@ PlasmaComponents.Button {
                     main.requestActivate();
                     focusField.forceActiveFocus();
 
-                    tileWindow(activeClient, windows[index]);
+                    tileWindow(workspace.activeClient, windows[index], root);
 
                     if (!clickedWindows.includes(windows[index])) clickedWindows.push(windows[index]);
 
@@ -176,9 +177,14 @@ PlasmaComponents.Button {
                     // Register shortcuts
                     if (window.shortcutKey) {
                         let key = [window.shortcutModifier, window.shortcutKey];
-                        tileShortcuts.set(key, () => {
-                            tileWindow(activeClient, window);
-                        });
+                        main.tileShortcuts.set(key, function(workspace, window, tileWindow, root) {
+                            return function() {
+                                if (window == undefined || root == undefined || workspace == undefined || workspace.activeClient == undefined) {
+                                    return;
+                                }
+                                tileWindow(workspace.activeClient, window, root);
+                            }
+                        }(workspace, window, tileWindow, root));
                     }
                 }
             }
