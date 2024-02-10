@@ -53,8 +53,8 @@ PlasmaComponents.Button {
         }
 
         client.setMaximize(false, false);
-        client.geometry = Qt.rect(screen.x + newX, screen.y + newY, newWidth, newHeight);
-        if (hideTiledWindowTitlebar) client.noBorder = true;
+        client.geometry = Qt.rect(screen.x + x, screen.y + y, width, height);
+        if (root.main.hideTiledWindowTitlebar) client.noBorder = true;
     }
 
     function childHasFocus() {
