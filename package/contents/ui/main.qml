@@ -56,6 +56,14 @@ PlasmaCore.Dialog {
         mainDialog.screen = workspace.clientArea(KWin.MaximizeArea, workspace.activeScreen, workspace.currentDesktop);
         var screen = mainDialog.screen
 
+        // We want layoutsRepeater to regenerate all of it's children.
+        // To make that happen, we save the model it is using, set the model to
+        // undefined, and then restore the model.
+        // It's a hack, but it works.
+        var model = layoutsRepeater.model;
+        layoutsRepeater.model = undefined;
+        layoutsRepeater.model = model;
+
         focusTimer.running = true;
 
         activeClient = workspace.activeClient;
