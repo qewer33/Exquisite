@@ -196,15 +196,30 @@ PlasmaCore.Dialog {
                     return false;
                 }
 
-                WindowLayout {
-                    Loader {
-                        id: layoutFile
-                        source: fileUrl
+                ColumnLayout {
+                    id: column
+                    function childHasFocus() {
+                        return layout.childHasFocus();
                     }
 
-                    windows: layoutFile.item.windows
-                    screen: mainDialog.screen
-                    main: mainDialog
+                    Text {
+                        id: label
+                        text: layoutFile.item.name
+                        color: "white"
+                        font.pointSize: 15
+                    }
+
+                    WindowLayout {
+                        Loader {
+                            id: layoutFile
+                            source: fileUrl
+                        }
+
+                        id: layout
+                        windows: layoutFile.item.windows
+                        screen: mainDialog.screen
+                        main: mainDialog
+                    }
                 }
             }
         }
