@@ -217,7 +217,17 @@ PlasmaCore.Dialog {
 
                         id: layout
                         windows: layoutFile.item.windows
-                        screen: mainDialog.screen
+                        screen: {
+                            if (layoutFile.item.screen != undefined) {
+                                if (layoutFile.item.screen < workspace.numScreens) {
+                                    return workspace.clientArea(KWin.MaximizeArea, layoutFile.item.screen, workspace.currentDesktop);
+                                } else {
+                                    return workspace.clientArea(KWin.MaximizeArea, 0, workspace.currentDesktop);
+                                }
+                            } else {
+                                return mainDialog.screen;
+                            }
+                        }
                         main: mainDialog
                     }
                 }
