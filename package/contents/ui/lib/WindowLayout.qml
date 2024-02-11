@@ -20,7 +20,7 @@ PlasmaComponents.Button {
 
     function tileWindow(client, window, root) {
         var screen = root.screen;
-        if (screen == undefined) { console.log("screen"); return; }
+        if (screen == undefined) { console.log("screen not defined"); return; }
         if (!client.normalWindow) return;
         if (root.main.rememberWindowGeometries && !root.main.oldWindowGemoetries.has(client)) root.main.oldWindowGemoetries.set(client, [client.geometry.width, client.geometry.height]);
 
