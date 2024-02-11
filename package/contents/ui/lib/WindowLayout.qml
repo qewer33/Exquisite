@@ -90,6 +90,16 @@ PlasmaComponents.Button {
         }
     }
 
+    function spanCheck(normal, raw, screenSize) {
+	if (raw != undefined) {
+	    let val = Math.min(raw / (screenSize / 12.0), 12.0)
+	    val = Math.round(val);
+	    return val;
+	} else {
+	    return normal;
+	}
+    }
+
     SpanGridLayout {
         anchors.fill: parent
         anchors.margins: 10
@@ -118,42 +128,10 @@ PlasmaComponents.Button {
                         return out;
                     } else return "";
                 }
-                Layout.column: {
-                    if (windows[index].hasOwnProperty("rawX")) {
-                        let val = Math.min(windows[index].rawX / (screen.width / 12.0), 12.0);
-                        val = Math.round(val);
-                        return val;
-                    } else {
-                        return windows[index].x;
-                    }
-                }
-                Layout.row: {
-                    if (windows[index].hasOwnProperty("rawY")) {
-                        let val = Math.min(windows[index].rawY / (screen.height / 12.0), 12.0);
-                        val = Math.round(val);
-                        return val;
-                    } else {
-                        return windows[index].y;
-                    }
-                }
-                Layout.rowSpan: {
-                    if (windows[index].hasOwnProperty("rawWidth")) {
-                        let val = Math.min(windows[index].rawWidth / (screen.width / 12.0), 12.0)
-                        val = Math.round(val);
-                        return val;
-                    } else {
-                        return windows[index].width;
-                    }
-                }
-                Layout.columnSpan: {
-                    if (windows[index].hasOwnProperty("rawHeight")) {
-                        let val = Math.min(windows[index].rawHeight / (screen.height / 12.0), 12.0);
-                        val = Math.round(val);
-                        return val;
-                    } else {
-                        return windows[index].height;
-                    }
-                }
+                Layout.column: { root.spanCheck(windows[index].x, windows[index].rawX, screen.width); }
+                Layout.row: { root.spanCheck(windows[index].y, windows[index].rawY, screen.height); }
+                Layout.rowSpan: { root.spanCheck(windows[index].width, windows[index].rawWidth, screen.width); }
+                Layout.columnSpan: { root.spanCheck(windows[index].height, windows[index].rawHeight, screen.height); }
 
                 onClicked: {
                     main.raise();

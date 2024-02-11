@@ -224,8 +224,10 @@ PlasmaCore.Dialog {
                                 } else {
                                     return workspace.clientArea(KWin.MaximizeArea, 0, workspace.currentDesktop);
                                 }
-                            } else {
+                            } else if (mainDialog.screen != undefined) {
                                 return mainDialog.screen;
+                            } else {
+                                return workspace.clientArea(KWin.MaximizeArea, 0, workspace.currentDesktop);
                             }
                         }
                         main: mainDialog
