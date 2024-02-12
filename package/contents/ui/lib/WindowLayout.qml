@@ -31,26 +31,10 @@ PlasmaComponents.Button {
         let width = 0.0;
         let height = 0.0;
 
-        if (window.hasOwnProperty("rawX")) {
-            x = window.rawX;
-        } else {
-            x = Math.round(window.x * xMult) + tileGap;
-        }
-        if (window.hasOwnProperty("rawY")) {
-            y = window.rawY;
-        } else {
-            y = Math.round(window.y * yMult) + tileGap;
-        }
-        if (window.hasOwnProperty("rawWidth")) {
-            width = window.rawWidth;
-        } else {
-            width = Math.round(window.width * xMult) - 2*tileGap;
-        }
-        if (window.hasOwnProperty("rawWidth")) {
-            height = window.rawHeight;
-        } else {
-            height = Math.round(window.height * yMult) - 2*tileGap;
-        }
+        x = window.rawX ?? Math.round(window.x * xMult) + tileGap;
+        y = window.rawY ?? Math.round(window.y * yMult) + tileGap;
+        width = window.rawWidth ?? Math.round(window.width * xMult) - 2*tileGap;
+        height = window.rawHeight ?? Math.round(window.height * yMult) - 2*tileGap;
 
         client.setMaximize(false, false);
         client.geometry = Qt.rect(screen.x + x, screen.y + y, width, height);
