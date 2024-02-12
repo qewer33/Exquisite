@@ -4,6 +4,7 @@ import Qt.labs.folderlistmodel 2.15
 import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.components 3.0 as PlasmaComponents
 import org.kde.kwin 2.0
+import org.kde.kirigami 2.20 as Kirigami
 
 import "lib"
 
@@ -19,6 +20,7 @@ PlasmaCore.Dialog {
     property int columns: 5
     property int position: 1
     property double tileScale: 1.3
+    property bool nameAbove: false
     property bool headerVisible: true
     property bool activeWindowLabelVisible: true
     property bool restartButtonVisible: true
@@ -38,6 +40,7 @@ PlasmaCore.Dialog {
         columns = KWin.readConfig("columns", 5);
         position = KWin.readConfig("position", 1);
         tileScale = KWin.readConfig("tileScale", 1.3);
+        nameAbove = KWin.readConfig("nameAbove", false);
         headerVisible = KWin.readConfig("showHeader", true);
         activeWindowLabelVisible = KWin.readConfig("showActiveWindowLabel", true);
         restartButtonVisible = KWin.readConfig("showRestartButton", true);
@@ -202,11 +205,14 @@ PlasmaCore.Dialog {
                         return layout.childHasFocus();
                     }
 
-                    Text {
-                        id: label
+                    PlasmaComponents.Label {
+                        id: labelTop
+                        visible: nameAbove
                         text: layoutFile.item.name
-                        color: "white"
-                        font.pointSize: 15
+                        color: Kirigami.Theme.disabledTextColor
+                        width: layout.width
+                        elide: Text.ElideRight
+                        Layout.alignment: Qt.AlignHCenter
                     }
 
                     WindowLayout {
@@ -231,6 +237,16 @@ PlasmaCore.Dialog {
                             }
                         }
                         main: mainDialog
+                    }
+
+                    PlasmaComponents.Label {
+                        id: labelBottom
+                        visible: !nameAbove
+                        text: layoutFile.item.name
+                        color: Kirigami.Theme.disabledTextColor
+                        width: layout.width
+                        elide: Text.ElideRight
+                        Layout.alignment: Qt.AlignHCenter
                     }
                 }
             }
