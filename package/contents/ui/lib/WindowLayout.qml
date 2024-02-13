@@ -51,9 +51,7 @@ PlasmaComponents.Button {
     }
 
     onClicked: {
-        main.raise();
-        main.requestActivate();
-        focusField.forceActiveFocus();
+        main.doRaise(true);
 
         if (tileAvailableWindowsOnBackgroundClick) {
             let clientList = [];
@@ -118,7 +116,7 @@ PlasmaComponents.Button {
                 Layout.columnSpan: { root.spanCheck(windows[index].height, windows[index].rawHeight, screen.height); }
 
                 onClicked: {
-                    main.raise();
+                    main.doRaise(true);
                     main.requestActivate();
                     focusField.forceActiveFocus();
 

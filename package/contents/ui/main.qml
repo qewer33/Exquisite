@@ -73,9 +73,7 @@ PlasmaCore.Dialog {
 
         mainDialog.visible = true;
 
-        mainDialog.raise();
-        mainDialog.requestActivate();
-        focusField.forceActiveFocus();
+        mainDialog.doRaise(true);
 
         switch (position) {
             case 0:
@@ -112,6 +110,14 @@ PlasmaCore.Dialog {
         focusTimer.running = false;
         mainDialog.visible = false;
         mainDialog.tileShortcuts.clear();
+    }
+
+    function doRaise(forceActiveFocus) {
+        mainDialog.raise();
+        mainDialog.requestActivate();
+        if (forceActiveFocus) {
+            focusField.forceActiveFocus();
+        }
     }
 
     ColumnLayout {
@@ -258,8 +264,7 @@ PlasmaCore.Dialog {
             visible: false
 
             onActiveFocusChanged: {
-                mainDialog.raise();
-                mainDialog.requestActivate();
+                mainDialog.doRaise(false);
             }
 
             Keys.onEscapePressed: mainDialog.hide()
@@ -317,9 +322,7 @@ PlasmaCore.Dialog {
 
             onTriggered: {
                 if (!focusField.focused && !closeButton.hovered && !layoutsRepeater.childHasFocus()) {
-                    mainDialog.raise();
-                    mainDialog.requestActivate();
-                    focusField.forceActiveFocus();
+                    mainDialog.doRaise(true);
                 }
             }
         }
