@@ -122,7 +122,7 @@ PlasmaComponents.Button {
                     main.requestActivate();
                     focusField.forceActiveFocus();
 
-                    tileWindow(workspace.activeClient, windows[index], root);
+                    tileWindow(main.activeClient, windows[index], root);
 
                     if (!clickedWindows.includes(windows[index])) clickedWindows.push(windows[index]);
 
@@ -141,10 +141,10 @@ PlasmaComponents.Button {
                         let key = [window.shortcutModifier, window.shortcutKey];
                         main.tileShortcuts.set(key, function(workspace, window, tileWindow, root) {
                             return function() {
-                                if (window == undefined || root == undefined || workspace == undefined || workspace.activeClient == undefined) {
+                                if (window == undefined || root == undefined || workspace == undefined || main == undefined || main.activeClient == undefined) {
                                     return;
                                 }
-                                tileWindow(workspace.activeClient, window, root);
+                                tileWindow(main.activeClient, window, root);
                             }
                         }(workspace, window, tileWindow, root));
                     }
