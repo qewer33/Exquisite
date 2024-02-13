@@ -36,6 +36,10 @@ PlasmaCore.Dialog {
     property var oldWindowGemoetries: new Map()
     property var tileShortcuts: new Map()
 
+    // On Wayland, all calling raise does is generate a warning message.
+    // So if we detect that we are likely on Wayland, disable it going forward.
+    property bool suppressRaise: false
+
     function loadConfig(){
         columns = KWin.readConfig("columns", 5);
         position = KWin.readConfig("position", 1);
@@ -112,8 +116,23 @@ PlasmaCore.Dialog {
         mainDialog.tileShortcuts.clear();
     }
 
+    function checkRaise() {
+        if (suppressRaise) {
+            return;
+        }
+        // This is a horrible hack.
+        // But a bug showed that on Wayland, workspace.activeClient is useful, but on X11 that is not the case.
+        // And we want to suppress Raise on Wayland.
+        if (mainDialog.activeClient != undefined && workspace.activeClient != undefined) {
+            suppressRaise = true;
+        }
+    }
+
     function doRaise(forceActiveFocus) {
-        mainDialog.raise();
+        checkRaise();
+        if (!suppressRaise) {
+            mainDialog.raise();
+        }
         mainDialog.requestActivate();
         if (forceActiveFocus) {
             focusField.forceActiveFocus();
