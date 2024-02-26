@@ -1,4 +1,4 @@
- #!/usr/bin/env bash
+#!/usr/bin/env bash
 
 PACKAGE_NAME=$(kreadconfig5 --file="${PWD}/package/metadata.desktop" --group="Desktop Entry" --key="X-KDE-PluginInfo-Name")
 INSTALL_LOCATION="${HOME}/.local/share/kwin/scripts/"

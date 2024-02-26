@@ -3,9 +3,8 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
       http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
-    <kcfgfile name=""/>
+    <kcfgfile/>
     <group name="">
-
         <entry name="columns" type="Int">
             <default>5</default>
         </entry>
@@ -16,6 +15,14 @@
 
         <entry name="showHeader" type="Bool">
             <default>true</default>
+        </entry>
+
+        <entry name="hideTiledWindowTitlebar" type="Bool">
+            <default>false</default>
+        </entry>
+
+        <entry name="nameAbove" type="Bool">
+            <default>false</default>
         </entry>
 
         <entry name="showActiveWindowLabel" type="Bool">
@@ -49,6 +56,5 @@
         <entry name="tileAvailableWindowsOnBackgroundClick" type="Bool">
             <default>true</default>
         </entry>
-
     </group>
 </kcfg>

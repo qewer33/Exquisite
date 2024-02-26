@@ -13,26 +13,32 @@ PlasmaComponents.Button {
     implicitWidth: 160*1.2 * PlasmaCore.Units.devicePixelRatio
     implicitHeight: 90*1.2 * PlasmaCore.Units.devicePixelRatio
 
+    property var main
     property var windows
+    property var screen
     property var clickedWindows: []
 
-    function tileWindow(window, x, y, width, height) {
-        if (!window.normalWindow) return;
-        if (rememberWindowGeometries && !oldWindowGemoetries.has(window)) oldWindowGemoetries.set(window, [window.geometry.width, window.geometry.height]);
-
-        let screen = workspace.clientArea(KWin.MaximizeArea, workspace.activeScreen, window.desktop);
+    function tileWindow(client, window, root) {
+        var screen = root.screen;
+        if (screen == undefined) { console.log("screen not defined"); return; }
+        if (!client.normalWindow) return;
+        if (root.main.rememberWindowGeometries && !root.main.oldWindowGemoetries.has(client)) root.main.oldWindowGemoetries.set(client, [client.geometry.width, client.geometry.height]);
 
         let xMult = screen.width / 12.0;
         let yMult = screen.height / 12.0;
+        let x = 0.0;
+        let y = 0.0;
+        let width = 0.0;
+        let height = 0.0;
 
-        let newX = Math.round(x * xMult) + tileGap;
-        let newY = Math.round(y * yMult) + tileGap;
-        let newWidth = Math.round(width * xMult) - 2*tileGap;
-        let newHeight = Math.round(height * yMult) - 2*tileGap;
+        x = window.rawX ?? Math.round(window.x * xMult) + tileGap;
+        y = window.rawY ?? Math.round(window.y * yMult) + tileGap;
+        width = window.rawWidth ?? Math.round(window.width * xMult) - 2*tileGap;
+        height = window.rawHeight ?? Math.round(window.height * yMult) - 2*tileGap;
 
-        window.setMaximize(false, false);
-        window.geometry = Qt.rect(screen.x + newX, screen.y + newY, newWidth, newHeight);
-        if (hideTiledWindowTitlebar) window.noBorder = true;
+        client.setMaximize(false, false);
+        client.geometry = Qt.rect(screen.x + x, screen.y + y, width, height);
+        if (root.main.hideTiledWindowTitlebar) client.noBorder = true;
     }
 
     function childHasFocus() {
@@ -45,9 +51,7 @@ PlasmaComponents.Button {
     }
 
     onClicked: {
-        mainDialog.raise();
-        mainDialog.requestActivate();
-        focusField.forceActiveFocus();
+        main.doRaise(true);
 
         if (tileAvailableWindowsOnBackgroundClick) {
             let clientList = [];
@@ -60,12 +64,22 @@ PlasmaComponents.Button {
             for (let i = 0; i < clientList.length; i++) {
                 if (i >= windows.length || i >= clientList.length) return;
                 let client = clientList[i];
-                tileWindow(client, windows[i].x, windows[i].y, windows[i].width, windows[i].height);
+                tileWindow(client, windows[i], root);
                 workspace.activeClient = client;
             }
 
-            if (hideOnFirstTile || hideOnLayoutTiled) mainDialog.visible = false;
+            if (hideOnFirstTile || hideOnLayoutTiled) main.hide();
         }
+    }
+
+    function spanCheck(normal, raw, screenSize) {
+	if (raw != undefined) {
+	    let val = Math.min(raw / (screenSize / 12.0), 12.0)
+	    val = Math.round(val);
+	    return val;
+	} else {
+	    return normal;
+	}
     }
 
     SpanGridLayout {
@@ -96,24 +110,24 @@ PlasmaComponents.Button {
                         return out;
                     } else return "";
                 }
-                Layout.row: windows[index].y
-                Layout.rowSpan: windows[index].width
-                Layout.column: windows[index].x
-                Layout.columnSpan: windows[index].height
+                Layout.column: { root.spanCheck(windows[index].x, windows[index].rawX, screen.width); }
+                Layout.row: { root.spanCheck(windows[index].y, windows[index].rawY, screen.height); }
+                Layout.rowSpan: { root.spanCheck(windows[index].width, windows[index].rawWidth, screen.width); }
+                Layout.columnSpan: { root.spanCheck(windows[index].height, windows[index].rawHeight, screen.height); }
 
                 onClicked: {
-                    mainDialog.raise();
-                    mainDialog.requestActivate();
+                    main.doRaise(true);
+                    main.requestActivate();
                     focusField.forceActiveFocus();
 
-                    tileWindow(activeClient, windows[index].x, windows[index].y, windows[index].width, windows[index].height);
+                    tileWindow(main.activeClient, windows[index], root);
 
                     if (!clickedWindows.includes(windows[index])) clickedWindows.push(windows[index]);
 
-                    if (hideOnFirstTile) mainDialog.visible = false;
+                    if (hideOnFirstTile) main.hide();
                     if (hideOnLayoutTiled && clickedWindows.length === windows.length) {
                         clickedWindows = [];
-                        mainDialog.visible = false;
+                        main.hide();
                     }
                 }
 
@@ -123,9 +137,14 @@ PlasmaComponents.Button {
                     // Register shortcuts
                     if (window.shortcutKey) {
                         let key = [window.shortcutModifier, window.shortcutKey];
-                        tileShortcuts.set(key, () => {
-                            tileWindow(activeClient, window.x, window.y, window.width, window.height);
-                        });
+                        main.tileShortcuts.set(key, function(workspace, window, tileWindow, root) {
+                            return function() {
+                                if (window == undefined || root == undefined || workspace == undefined || main == undefined || main.activeClient == undefined) {
+                                    return;
+                                }
+                                tileWindow(main.activeClient, window, root);
+                            }
+                        }(workspace, window, tileWindow, root));
                     }
                 }
             }
