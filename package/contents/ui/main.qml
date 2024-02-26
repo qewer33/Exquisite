@@ -310,13 +310,6 @@ PlasmaCore.Dialog {
         }
 
         Connections {
-            target: options
-            function onConfigChanged() {
-                mainDialog.loadConfig();
-            }
-        }
-
-        Connections {
             target: workspace.activeClient
             function onMoveResizedChanged() {
                 if (rememberWindowGeometries) {
@@ -348,6 +341,7 @@ PlasmaCore.Dialog {
     }
 
     Component.onCompleted: {
+        options.configChanged.connect(mainDialog.loadConfig);
         KWin.registerWindow(mainDialog);
         KWin.registerShortcut(
             "Exquisite",
@@ -358,7 +352,7 @@ PlasmaCore.Dialog {
                     mainDialog.hide();
                 } else {
                     mainDialog.hide();
-                    mainDialog.loadConfig();
+                    options.configChanged();
                     mainDialog.show();
                 }
             }
